@@ -274,6 +274,26 @@ function loadModel() {
         // Reduce quality for low-end devices
         elements.arModel.setAttribute('scale', '0.8 0.8 0.8');
     }
+
+    // Set a timeout for loading
+    setTimeout(() => {
+        if (!AppState.modelLoaded) {
+            console.warn('⚠️ Model loading is taking too long...');
+            const timeoutAction = document.getElementById('loading-timeout-action');
+            if (timeoutAction) {
+                timeoutAction.classList.remove('hidden');
+
+                // Add event listener to skip button
+                const skipBtn = document.getElementById('skip-loading-btn');
+                if (skipBtn) {
+                    skipBtn.onclick = () => {
+                        console.log('⏩ User skipped loading');
+                        onModelLoaded({ target: elements.arModel });
+                    };
+                }
+            }
+        }
+    }, 8000); // 8 seconds timeout
 }
 
 /**

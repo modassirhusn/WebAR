@@ -38,3 +38,4 @@ desktop.ini
 
 # Netlify
 .netlify
+.env*.local

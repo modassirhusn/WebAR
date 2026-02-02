@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    
+
     <title>WebAR Experience</title>
     <meta name="description" content="Interactive Augmented Reality experience in your browser">
-    
+
     <!-- A-Frame for WebXR -->
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    
+
     <!-- AR.js for additional AR features (optional enhancement) -->
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    
+
     <!-- Gesture Detector Component for A-Frame -->
     <script src="https://unpkg.com/aframe-gesture-detector@4.2.2/dist/gesture-detector.js"></script>
-    
+
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Loading Screen -->
     <div id="loading-screen" class="overlay">
         <div class="loading-content">
+            <div class="logo-container">
+                <img src="assets/images/logo.png" alt="WebAR Logo" class="app-logo">
+            </div>
             <div class="spinner"></div>
-            <h2>Loading AR Experience</h2>
-            <p>Preparing your augmented reality...</p>
+            <h2 id="loading-text">Loading AR Experience</h2>
+            <p id="loading-subtext">Preparing your augmented reality...</p>
+
+            <!-- Timeout Action (Hidden initially) -->
+            <div id="loading-timeout-action" class="hidden">
+                <button id="skip-loading-btn" class="secondary-btn">Took too long? Start Anyway</button>
+            </div>
         </div>
     </div>
 
@@ -67,46 +77,30 @@
     </div>
 
     <!-- AR Scene -->
-    <a-scene
-        id="ar-scene"
-        embedded
+    <a-scene id="ar-scene" embedded
         arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
-        vr-mode-ui="enabled: false"
-        gesture-detector
+        vr-mode-ui="enabled: false" gesture-detector
         renderer="logarithmicDepthBuffer: true; colorManagement: true; sortObjects: true;"
-        loading-screen="enabled: false"
-        device-orientation-permission-ui="enabled: false">
-        
+        loading-screen="enabled: false" device-orientation-permission-ui="enabled: false">
+
         <!-- Camera -->
         <a-entity camera look-controls-enabled="false"></a-entity>
-        
+
         <!-- Lighting -->
         <a-light type="ambient" intensity="0.8"></a-light>
         <a-light type="directional" intensity="0.5" position="1 1 1"></a-light>
         <a-light type="hemisphere" intensity="0.6"></a-light>
-        
+
         <!-- 3D Model Container -->
         <a-entity id="model-container" position="0 0 -3">
             <!-- The 3D model will be loaded here dynamically -->
-            <a-gltf-model
-                id="ar-model"
-                rotation="0 0 0"
-                scale="1 1 1"
-                position="0 0 0"
-                gesture-handler="minScale: 0.25; maxScale: 10"
-                shadow="cast: true; receive: false"
-                animation-mixer>
+            <a-gltf-model id="ar-model" rotation="0 0 0" scale="1 1 1" position="0 0 0"
+                gesture-handler="minScale: 0.25; maxScale: 10" shadow="cast: true; receive: false" animation-mixer>
             </a-gltf-model>
         </a-entity>
 
         <!-- Ground plane for shadows (optional) -->
-        <a-plane
-            id="ground"
-            rotation="-90 0 0"
-            width="100"
-            height="100"
-            color="#ffffff"
-            shadow="receive: true"
+        <a-plane id="ground" rotation="-90 0 0" width="100" height="100" color="#ffffff" shadow="receive: true"
             visible="false">
         </a-plane>
     </a-scene>
@@ -117,7 +111,7 @@
             <h3>🎯 AR Active</h3>
             <button id="exit-ar-btn" class="icon-btn">✕</button>
         </div>
-        
+
         <div class="controls-instructions">
             <div class="instruction-item">
                 <span class="icon">👆</span>
@@ -221,4 +215,5 @@
         });
     </script>
 </body>
+
 </html>
