@@ -1,34 +1,52 @@
 {
-    "name": "webar-experience",
-    "version": "1.0.0",
-    "description": "Production-ready WebAR prototype with QR code access",
-    "main": "index.html",
-    "scripts": {
-        "start": "http-server -p 8080 -c-1",
-        "dev": "http-server -p 8080 -c-1 --ssl",
-        "deploy:vercel": "vercel --prod",
-        "deploy:netlify": "netlify deploy --prod"
-    },
-    "keywords": [
-        "webxr",
-        "ar",
-        "augmented-reality",
-        "aframe",
-        "threejs",
-        "mobile-ar",
-        "qr-code"
-    ],
-    "author": "Your Name",
-    "license": "MIT",
-    "devDependencies": {
-        "http-server": "^14.1.1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/yourusername/webar-experience"
-    },
-    "bugs": {
-        "url": "https://github.com/yourusername/webar-experience/issues"
-    },
-    "homepage": "https://github.com/yourusername/webar-experience#readme"
+  "name": "webar-platform",
+  "version": "1.0.0",
+  "description": "Production-ready WebAR platform using A-Frame, WebXR, and Three.js. Launch instantly via QR code with no app installation.",
+  "main": "public/app.js",
+  "scripts": {
+    "start": "http-server public -p 8080 --ssl --cert cert.pem --key key.pem",
+    "dev": "http-server public -p 8080 -c-1",
+    "build": "echo 'No build step required - static files only'",
+    "test": "echo 'Tests coming soon'",
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod --dir=public"
+  },
+  "keywords": [
+    "webxr",
+    "augmented-reality",
+    "ar",
+    "aframe",
+    "threejs",
+    "webgl",
+    "mobile-ar",
+    "browser-ar",
+    "qr-code",
+    "3d-models",
+    "glb",
+    "gltf",
+    "usdz"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/webar-platform.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/webar-platform/issues"
+  },
+  "homepage": "https://github.com/your-username/webar-platform#readme",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "iOS >= 13",
+    "Android >= 7",
+    "Chrome >= 79",
+    "Safari >= 13",
+    "Firefox >= 85"
+  ]
 }
