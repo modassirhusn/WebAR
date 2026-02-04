@@ -4,12 +4,12 @@
   "description": "Production-ready WebAR platform using A-Frame, WebXR, and Three.js. Launch instantly via QR code with no app installation.",
   "main": "public/app.js",
   "scripts": {
-    "start": "http-server public -p 8080 --ssl --cert cert.pem --key key.pem",
-    "dev": "http-server public -p 8080 -c-1",
+    "start": "http-server . -p 8080 --ssl --cert cert.pem --key key.pem",
+    "dev": "http-server . -p 8080 -c-1",
     "build": "echo 'No build step required - static files only'",
     "test": "echo 'Tests coming soon'",
     "deploy:vercel": "vercel --prod",
-    "deploy:netlify": "netlify deploy --prod --dir=public"
+    "deploy:netlify": "netlify deploy --prod --dir=."
   },
   "keywords": [
     "webxr",
@@ -48,5 +48,8 @@
     "Chrome >= 79",
     "Safari >= 13",
     "Firefox >= 85"
-  ]
+  ],
+  "dependencies": {
+    "mongoose": "^9.1.6"
+  }
 }

@@ -1,254 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <title>WebAR Experience | Instant AR Demo</title>
-    
-    <!-- Open Graph Meta Tags for QR Code Preview -->
-    <meta property="og:title" content="WebAR Experience - Tap to Launch AR">
-    <meta property="og:description" content="Instant browser-based AR. No app required.">
-    <meta property="og:image" content="/assets/preview.png">
-    
-    <!-- A-Frame Core (WebXR + VR/AR Support) -->
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    
-    <!-- AR.js for Marker-based fallback -->
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.min.js"></script>
-    
-    <!-- Gesture Detector Component (Touch interactions) -->
-    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
-    
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <title>Premium WebAR Dining</title>
+  <meta name="description" content="Life-size 3D dining experience in your browser">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <!-- A-Frame for WebXR -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <!-- AR.js for webcam support -->
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <!-- Gesture Detector Component -->
+  <script src="https://unpkg.com/aframe-gesture-detector@4.2.2/dist/gesture-detector.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="loading-screen">
-        <div class="loading-content">
-            <div class="loading-spinner">
-                <svg viewBox="0 0 50 50">
-                    <circle cx="25" cy="25" r="20" fill="none" stroke="#00ff88" stroke-width="3" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)">
-                        <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/>
-                    </circle>
-                </svg>
-            </div>
-            <h2>Initializing AR Experience</h2>
-            <p id="loading-message">Preparing your device...</p>
-            <div class="loading-bar">
-                <div class="loading-progress" id="loading-progress"></div>
-            </div>
-        </div>
+  <!-- Premium Menu Screen (Entry Point) -->
+  <div id="menu-screen" class="menu-screen">
+    <div class="menu-header">
+      <span class="gold-title">Signature Experience</span>
+      <h1>Select Your Dish</h1>
     </div>
 
-    <!-- Unsupported Device Fallback -->
-    <div id="fallback-screen" class="fallback-screen" style="display: none;">
-        <div class="fallback-content">
-            <div class="fallback-icon">⚠️</div>
-            <h2>AR Not Supported</h2>
-            <p class="fallback-message">Your device or browser doesn't support WebXR.</p>
-            
-            <div class="fallback-options">
-                <h3>Recommended Browsers:</h3>
-                <ul>
-                    <li><strong>iOS:</strong> Safari 13+</li>
-                    <li><strong>Android:</strong> Chrome 79+ with WebXR enabled</li>
-                </ul>
-                
-                <div class="fallback-alternative">
-                    <h3>View 3D Model Instead</h3>
-                    <button id="view-3d-fallback" class="btn-primary">View 3D Model</button>
-                </div>
-            </div>
-            
-            <div class="device-info">
-                <small id="device-details"></small>
-            </div>
+    <div class="menu-grid">
+      <!-- Pizza Card -->
+      <div class="food-card" onclick="selectFood('pizza')">
+        <div class="food-image-container">
+          <img src="models/pizza.glb" alt="Artisan Pizza" class="hidden">
+          <!-- Hidden img to trigger browser cache if needed or use actual preview images if available -->
+          <div class="placeholder-icon">🍕</div>
         </div>
+        <h3>Artisan Pizza</h3>
+        <span class="price">$18.00</span>
+        <p>Stone-baked dough with fresh mozzarella and basil.</p>
+      </div>
+
+      <!-- Croissant Card -->
+      <div class="food-card" onclick="selectFood('croissant')">
+        <div class="food-image-container">
+          <div class="placeholder-icon">🥐</div>
+        </div>
+        <h3>Butter Croissant</h3>
+        <span class="price">$5.50</span>
+        <p>Flaky, golden-brown layers of pure buttery perfection.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AR Experience UI (Initially hidden) -->
+  <div id="ar-ui" class="hidden">
+    <!-- Left Side: Nutritional Arrows -->
+    <div class="side-ui side-ui-left">
+      <!-- Protein (Upper) -->
+      <div class="nutritional-arrow arrow-up">
+        <span class="arrow-icon">▲</span>
+        <span class="arrow-label">Protein</span>
+        <span id="protein-value" class="arrow-value">24g</span>
+      </div>
+
+      <!-- Carbs (Lower) -->
+      <div class="nutritional-arrow arrow-down">
+        <span id="carbs-value" class="arrow-value">45g</span>
+        <span class="arrow-label">Carbs</span>
+        <span class="arrow-icon">▼</span>
+      </div>
+
+      <!-- Fiber (Left) -->
+      <div class="nutritional-arrow arrow-left">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="arrow-icon" style="transform: rotate(-90deg);">▲</span>
+          <div style="display: flex; flex-direction: column;">
+            <span id="fiber-value" class="arrow-value">4g</span>
+            <span class="arrow-label">Fiber</span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Camera Permission Request -->
-    <div id="permission-screen" class="permission-screen" style="display: none;">
-        <div class="permission-content">
-            <div class="permission-icon">📷</div>
-            <h2>Camera Access Required</h2>
-            <p>We need your camera to place 3D models in your space</p>
-            <button id="grant-permission" class="btn-primary">Enable Camera</button>
-            <p class="permission-note">We respect your privacy. Camera access is only used for AR.</p>
-        </div>
+    <!-- Right Side: Ingredients -->
+    <div class="side-ui side-ui-right">
+      <div class="ingredients-list">
+        <h4>Ingredients</h4>
+        <ul id="ingredients-container">
+          <!-- Dynamic -->
+        </ul>
+      </div>
     </div>
 
-    <!-- Main AR Scene -->
-    <a-scene
-        id="ar-scene"
-        embedded
-        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
-        vr-mode-ui="enabled: false"
-        renderer="logarithmicDepthBuffer: true; precision: medium; antialias: true; alpha: true;"
-        device-orientation-permission-ui="enabled: false"
-        loading-screen="enabled: false"
-        gesture-detector
-        style="display: none;">
-        
-        <!-- Camera with AR capabilities -->
-        <a-entity id="camera-rig" position="0 0 0">
-            <a-camera 
-                id="main-camera"
-                look-controls-enabled="false"
-                wasd-controls-enabled="false">
-            </a-camera>
-        </a-entity>
-
-        <!-- Lighting Setup for realistic rendering -->
-        <a-entity light="type: ambient; color: #BBB; intensity: 0.8"></a-entity>
-        <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-1 2 1"></a-entity>
-        <a-entity light="type: hemisphere; color: #FFF; groundColor: #888; intensity: 0.5"></a-entity>
-
-        <!-- AR Hit Test Reticle (placement indicator) -->
-        <a-entity id="reticle" visible="false">
-            <a-ring 
-                color="#00ff88" 
-                radius-inner="0.15" 
-                radius-outer="0.2"
-                rotation="-90 0 0"
-                material="shader: flat; opacity: 0.6;">
-                <a-animation 
-                    attribute="scale" 
-                    from="1 1 1" 
-                    to="1.2 1.2 1.2" 
-                    direction="alternate" 
-                    dur="800" 
-                    repeat="indefinite"
-                    easing="ease-in-out-sine">
-                </a-animation>
-            </a-ring>
-        </a-entity>
-
-        <!-- 3D Model Container with gesture controls -->
-        <a-entity 
-            id="model-container"
-            gesture-handler
-            position="0 0 -2"
-            scale="1 1 1"
-            visible="false">
-            
-            <!-- Model 1: Default GLB model -->
-            <a-entity
-                id="model-1"
-                gltf-model="url(./models/model1.glb)"
-                scale="0.5 0.5 0.5"
-                animation-mixer
-                shadow="cast: true; receive: false">
-            </a-entity>
-            
-            <!-- Model 2: Alternative model (hidden by default) -->
-            <a-entity
-                id="model-2"
-                gltf-model="url(./models/model2.glb)"
-                scale="0.5 0.5 0.5"
-                animation-mixer
-                visible="false"
-                shadow="cast: true; receive: false">
-            </a-entity>
-        </a-entity>
-
-        <!-- Ground plane for shadow receiving -->
-        <a-plane 
-            id="ground-plane"
-            rotation="-90 0 0" 
-            width="100" 
-            height="100" 
-            color="#ffffff"
-            shadow="receive: true"
-            visible="false"
-            material="opacity: 0; transparent: true">
-        </a-plane>
-    </a-scene>
-
-    <!-- UI Controls Overlay -->
-    <div id="ui-controls" class="ui-controls" style="display: none;">
-        
-        <!-- Top Bar -->
-        <div class="top-bar">
-            <div class="brand">
-                <span class="brand-icon">🎯</span>
-                <span class="brand-text">WebAR</span>
-            </div>
-            <button id="info-btn" class="btn-icon" title="Info">
-                <svg viewBox="0 0 24 24" width="24" height="24">
-                    <path fill="currentColor" d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/>
-                </svg>
-            </button>
-        </div>
-
-        <!-- Instructions Panel (toggleable) -->
-        <div id="instructions-panel" class="instructions-panel" style="display: none;">
-            <h3>How to Use</h3>
-            <ul>
-                <li>👆 <strong>Tap</strong> to place the model</li>
-                <li>🤏 <strong>Pinch</strong> to scale</li>
-                <li>↔️ <strong>Drag</strong> to move</li>
-                <li>🔄 <strong>Two fingers</strong> to rotate</li>
-            </ul>
-            <button id="close-instructions" class="btn-small">Got it</button>
-        </div>
-
-        <!-- Placement Instructions -->
-        <div id="placement-hint" class="placement-hint">
-            <p>👆 Tap anywhere to place your model</p>
-        </div>
-
-        <!-- Bottom Action Bar -->
-        <div class="bottom-bar">
-            
-            <!-- Model Selector -->
-            <div class="model-selector">
-                <button class="model-btn active" data-model="model-1" title="Model 1">
-                    <span class="model-icon">🎨</span>
-                    <span class="model-label">Model 1</span>
-                </button>
-                <button class="model-btn" data-model="model-2" title="Model 2">
-                    <span class="model-icon">🎭</span>
-                    <span class="model-label">Model 2</span>
-                </button>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="action-buttons">
-                <button id="screenshot-btn" class="btn-action" title="Take Screenshot">
-                    <svg viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z"/>
-                    </svg>
-                    <span>Capture</span>
-                </button>
-
-                <button id="reset-btn" class="btn-action" title="Reset Position">
-                    <svg viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M12,4C14.1,4 16.1,4.8 17.6,6.3C20.7,9.4 20.7,14.5 17.6,17.6C15.8,19.5 13.3,20.4 10.9,20.3V22.3C13.9,22.5 17,21.4 19.2,19.2C23.1,15.3 23.1,8.7 19.2,4.8C17.3,2.9 14.7,2 12,2V4M6.3,17.6C3.2,14.5 3.2,9.4 6.3,6.3C7.8,4.8 9.9,4 12,4V2C9.3,2 6.7,2.9 4.8,4.8C0.9,8.7 0.9,15.3 4.8,19.2C7,21.4 10.1,22.5 13.1,22.3V20.3C10.7,20.4 8.2,19.5 6.3,17.6M7,13H9V11H7V13M15,11V13H17V11H15M11,15H13V9H11V15Z"/>
-                    </svg>
-                    <span>Reset</span>
-                </button>
-            </div>
-        </div>
+    <!-- Bottom: Order Actions -->
+    <div class="premium-order-panel">
+      <button class="btn-back" onclick="goBackToMenu()">Back</button>
+      <button class="btn-order-now" onclick="placeOrder()">Order Now</button>
     </div>
+  </div>
 
-    <!-- Screenshot Preview -->
-    <div id="screenshot-preview" class="screenshot-preview" style="display: none;">
-        <div class="screenshot-content">
-            <button id="close-screenshot" class="close-btn">×</button>
-            <img id="screenshot-image" alt="AR Screenshot">
-            <div class="screenshot-actions">
-                <a id="download-screenshot" download="ar-capture.png" class="btn-primary">Download</a>
-                <button id="share-screenshot" class="btn-secondary">Share</button>
-            </div>
-        </div>
-    </div>
+  <!-- AR Scene -->
+  <a-scene id="ar-scene" embedded arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix;"
+    vr-mode-ui="enabled: false" gesture-detector renderer="logarithmicDepthBuffer: true; colorManagement: true;"
+    loading-screen="enabled: false">
 
-    <!-- Toast Notifications -->
-    <div id="toast" class="toast"></div>
+    <!-- Camera -->
+    <a-entity camera look-controls-enabled="false"></a-entity>
 
-    <!-- Main Application Logic -->
-    <script src="app.js"></script>
+    <!-- Lighting -->
+    <a-light type="ambient" intensity="1.2"></a-light>
+    <a-light type="directional" intensity="0.8" position="1 1 1"></a-light>
+
+    <!-- 3D Model Container -->
+    <a-entity id="model-container" position="0 -0.5 -1.2">
+      <!-- Fixed real-world scaling will be handled via JS -->
+      <a-gltf-model id="ar-model" rotation="0 0 0" shadow="cast: true"></a-gltf-model>
+    </a-entity>
+  </a-scene>
+
+  <!-- Custom JavaScript -->
+  <script src="app.js"></script>
 </body>
+
 </html>

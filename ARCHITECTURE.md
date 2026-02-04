@@ -123,38 +123,35 @@ sequenceDiagram
     participant AR Scene
     
     User->>Browser: Scan QR Code
-    Browser->>App: Load Application
-    App->>Browser: Check WebXR Support
-    Browser-->>App: Supported/Unsupported
+    Browser->>App: Load Application (Menu View)
     
-    alt WebXR Supported
-        App->>User: Show Permission Screen
-        User->>App: Grant Camera Permission
-        App->>Camera: Request Access
-        Camera-->>App: Stream Ready
-        
-        App->>WebXR: Initialize AR Session
-        WebXR->>Camera: Start Camera Feed
-        
-        App->>AR Scene: Load 3D Model
-        AR Scene-->>App: Model Loaded
-        
-        App->>User: Show AR Controls
-        
-        loop User Interaction
-            User->>AR Scene: Touch Gesture
-            AR Scene->>AR Scene: Update Model Transform
-            AR Scene->>User: Render Updated View
-        end
-        
-        User->>App: Exit AR
-        App->>WebXR: End Session
-        WebXR->>Camera: Stop Camera
-    else WebXR Not Supported
-        App->>User: Show Unsupported Screen
-        User->>App: View 3D Fallback
-        App->>AR Scene: Load 3D Viewer Mode
+    User->>App: Select Dish (e.g., Pizza)
+    App->>User: Request Camera Permission
+    User->>App: Grant Permission
+    App->>Camera: Request Access
+    
+    App->>AR Scene: Set Life-Size Scale (1:1)
+    App->>AR Scene: Inject Nutritional Overlays
+    
+    App->>WebXR: Initialize AR Session
+    WebXR->>Camera: Start Camera Feed
+    
+    App->>AR Scene: Load 3D Model
+    AR Scene-->>App: Model Loaded
+    
+    App->>User: Show Order Panel & Overlays
+    
+    loop Real-World Observation
+        User->>AR Scene: Observe Model in Physical Space
+        AR Scene->>User: Render Life-Size View
     end
+    
+    User->>App: Click 'Order Now'
+    App->>App: Add to Cart & Record Engagement
+    
+    User->>App: Back to Menu
+    App->>WebXR: End Session
+    App->>User: Show Menu View
 ```
 
 ---
