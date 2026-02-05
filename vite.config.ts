@@ -15,6 +15,10 @@ export default defineConfig({
     },
     build: {
         outDir: 'dist',
+        // Ensure sourcemaps for debugging
+        sourcemap: false,
     },
     publicDir: 'public',
+    // Ensure base path is root for Vercel
+    base: '/',
 });
