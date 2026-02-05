@@ -289,7 +289,199 @@ body {
   color: #000;
 }
 
-/* ========== CONTENT PAGES (Hotel, Feedback, About) ========== */
+/* ========== DISH DETAIL PAGE ========== */
+.detail-container {
+  padding: 20px;
+  padding-top: 80px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.btn-back-detail {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.detail-image-wrapper {
+  width: 100%;
+  height: 300px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.detail-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-info h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.detail-price {
+  font-size: 24px;
+  color: var(--primary-gold);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.detail-nutrition {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.nutrition-item {
+  flex: 1;
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.nutrition-item .label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+}
+
+.nutrition-item .value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-gold);
+}
+
+.detail-ingredients {
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+}
+
+.detail-ingredients h4 {
+  font-size: 14px;
+  color: var(--primary-gold);
+  margin-bottom: 12px;
+}
+
+.detail-ingredients ul {
+  list-style: none;
+}
+
+.detail-ingredients li {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.detail-ingredients li:last-child {
+  border-bottom: none;
+}
+
+.btn-view-ar {
+  width: 100%;
+  background: linear-gradient(45deg, var(--primary-gold), #e0c293);
+  color: #000;
+  border: none;
+  padding: 18px;
+  border-radius: 15px;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(197, 168, 126, 0.4);
+}
+
+/* ========== CONTACT US (Premium) ========== */
+.contact-card {
+  max-width: 450px !important;
+}
+
+.contact-card .mission {
+  font-style: italic;
+  color: var(--primary-gold);
+  font-size: 14px;
+  margin: 15px 0 25px;
+}
+
+.star-rating {
+  margin: 20px 0;
+}
+
+.star-rating p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.stars {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  gap: 5px;
+}
+
+.stars input {
+  display: none;
+}
+
+.stars label {
+  font-size: 32px;
+  cursor: pointer;
+  transition: all 0.2s;
+  filter: grayscale(100%);
+}
+
+.stars input:checked~label,
+.stars label:hover,
+.stars label:hover~label {
+  filter: grayscale(0%);
+}
+
+.contact-details {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.contact-details h4 {
+  font-size: 14px;
+  color: var(--primary-gold);
+  margin: 15px 0 8px;
+}
+
+.contact-details p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 4px 0;
+}
+
+.developer-credits {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid var(--glass-border);
+  text-align: center;
+}
+
+.developer-credits p {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* ========== CONTENT PAGES (Hotel, About) ========== */
 .content-page {
   display: flex;
   align-items: center;
@@ -509,6 +701,36 @@ body {
   font-weight: 800;
   font-size: 15px;
   cursor: pointer;
+}
+
+/* ========== AR ERROR TOAST ========== */
+.ar-error-toast {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 59, 48, 0.9);
+  color: #fff;
+  padding: 15px 25px;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 9000;
+  max-width: 90%;
+  text-align: center;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 /* ========== A-FRAME SCENE ========== */

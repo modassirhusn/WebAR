@@ -62,11 +62,11 @@
       <section class="menu-section">
         <h3>🍛 North Indian</h3>
         <ul>
-          <li onclick="openAR('butter-chicken')">Butter Chicken <span>₹350</span></li>
-          <li onclick="openAR('paneer-tikka')">Paneer Tikka <span>₹280</span></li>
-          <li onclick="openAR('dal-makhani')">Dal Makhani <span>₹220</span></li>
-          <li onclick="openAR('garlic-naan')">Garlic Naan <span>₹60</span></li>
-          <li onclick="openAR('veg-biryani')">Veg Biryani <span>₹320</span></li>
+          <li onclick="showDishDetail('butter-chicken')">Butter Chicken <span>₹350</span></li>
+          <li onclick="showDishDetail('paneer-tikka')">Paneer Tikka <span>₹280</span></li>
+          <li onclick="showDishDetail('dal-makhani')">Dal Makhani <span>₹220</span></li>
+          <li onclick="showDishDetail('garlic-naan')">Garlic Naan <span>₹60</span></li>
+          <li onclick="showDishDetail('veg-biryani')">Veg Biryani <span>₹320</span></li>
         </ul>
       </section>
 
@@ -74,11 +74,11 @@
       <section class="menu-section">
         <h3>🥡 Chinese</h3>
         <ul>
-          <li onclick="openAR('hakka-noodles')">Hakka Noodles <span>₹240</span></li>
-          <li onclick="openAR('veg-manchurian')">Veg Manchurian <span>₹220</span></li>
-          <li onclick="openAR('chilli-chicken')">Chilli Chicken <span>₹290</span></li>
-          <li onclick="openAR('dim-sums')">Veg Dim Sums <span>₹180</span></li>
-          <li onclick="openAR('spring-rolls')">Spring Rolls <span>₹150</span></li>
+          <li onclick="showDishDetail('hakka-noodles')">Hakka Noodles <span>₹240</span></li>
+          <li onclick="showDishDetail('veg-manchurian')">Veg Manchurian <span>₹220</span></li>
+          <li onclick="showDishDetail('chilli-chicken')">Chilli Chicken <span>₹290</span></li>
+          <li onclick="showDishDetail('dim-sums')">Veg Dim Sums <span>₹180</span></li>
+          <li onclick="showDishDetail('spring-rolls')">Spring Rolls <span>₹150</span></li>
         </ul>
       </section>
 
@@ -86,11 +86,11 @@
       <section class="menu-section">
         <h3>🥘 South Indian</h3>
         <ul>
-          <li onclick="openAR('masala-dosa')">Masala Dosa <span>₹180</span></li>
-          <li onclick="openAR('idli-sambhar')">Idli Sambhar <span>₹140</span></li>
-          <li onclick="openAR('medu-vada')">Medu Vada <span>₹140</span></li>
-          <li onclick="openAR('onion-uttapam')">Onion Uttapam <span>₹160</span></li>
-          <li onclick="openAR('lemon-rice')">Lemon Rice <span>₹160</span></li>
+          <li onclick="showDishDetail('masala-dosa')">Masala Dosa <span>₹180</span></li>
+          <li onclick="showDishDetail('idli-sambhar')">Idli Sambhar <span>₹140</span></li>
+          <li onclick="showDishDetail('medu-vada')">Medu Vada <span>₹140</span></li>
+          <li onclick="showDishDetail('onion-uttapam')">Onion Uttapam <span>₹160</span></li>
+          <li onclick="showDishDetail('lemon-rice')">Lemon Rice <span>₹160</span></li>
         </ul>
       </section>
 
@@ -98,11 +98,11 @@
       <section class="menu-section">
         <h3>🍮 Desserts</h3>
         <ul>
-          <li onclick="openAR('gulab-jamun')">Gulab Jamun <span>₹90</span></li>
-          <li onclick="openAR('rasmalai')">Rasmalai <span>₹110</span></li>
-          <li onclick="openAR('kulfi')">Kesar Kulfi <span>₹80</span></li>
-          <li onclick="openAR('brownie')">Choco Brownie <span>₹140</span></li>
-          <li onclick="openAR('ice-cream')">Premium Vanilla <span>₹70</span></li>
+          <li onclick="showDishDetail('gulab-jamun')">Gulab Jamun <span>₹90</span></li>
+          <li onclick="showDishDetail('rasmalai')">Rasmalai <span>₹110</span></li>
+          <li onclick="showDishDetail('kulfi')">Kesar Kulfi <span>₹80</span></li>
+          <li onclick="showDishDetail('brownie')">Choco Brownie <span>₹140</span></li>
+          <li onclick="showDishDetail('ice-cream')">Premium Vanilla <span>₹70</span></li>
         </ul>
       </section>
     </div>
@@ -121,15 +121,55 @@
     </div>
   </div>
 
-  <!-- ========== FEEDBACK FORM ========== -->
+  <!-- ========== CONTACT US (Premium) ========== -->
   <div id="feedback-section" class="app-screen hidden content-page">
-    <div class="info-card">
-      <h2>Guest Feedback</h2>
+    <div class="info-card contact-card">
+      <h2>✨ Contact Us</h2>
+      <p class="mission">"We show you reality so you do not pay for fake food."</p>
+
       <form onsubmit="event.preventDefault(); submitFeedback();">
         <input type="text" placeholder="Your Name" required>
-        <textarea placeholder="Share your experience..." rows="4" required></textarea>
+        <input type="email" placeholder="Email Address" required>
+        <input type="tel" placeholder="Phone Number" required>
+
+        <div class="star-rating">
+          <p>Rate Your Experience:</p>
+          <div class="stars">
+            <input type="radio" name="rating" value="5" id="star5">
+            <label for="star5">⭐</label>
+            <input type="radio" name="rating" value="4" id="star4">
+            <label for="star4">⭐</label>
+            <input type="radio" name="rating" value="3" id="star3">
+            <label for="star3">⭐</label>
+            <input type="radio" name="rating" value="2" id="star2">
+            <label for="star2">⭐</label>
+            <input type="radio" name="rating" value="1" id="star1">
+            <label for="star1">⭐</label>
+          </div>
+        </div>
+
+        <textarea placeholder="Share your feedback..." rows="4" required></textarea>
         <button type="submit">Submit Feedback</button>
       </form>
+
+      <div class="contact-details">
+        <h4>📍 Visit Us</h4>
+        <p>Diamond Plaza Restaurant</p>
+        <p>5th Floor, Diamond Plaza</p>
+        <p>MG Road, Bangalore - 560001</p>
+        <p>Karnataka, India</p>
+
+        <h4>📞 Reach Us</h4>
+        <p>Phone: +91 98765 43210</p>
+        <p>Email: contact@diamondplaza.com</p>
+
+        <h4>⏰ Hours</h4>
+        <p>Mon - Sun: 11:00 AM - 11:00 PM</p>
+      </div>
+
+      <div class="developer-credits">
+        <p>Developed by <strong>Md Modassir Hussain</strong></p>
+      </div>
     </div>
   </div>
 
@@ -141,8 +181,48 @@
       <p>Developed by: <strong>Md Modassir Hussain</strong></p>
       <div class="contact">
         <h4>Contact Us</h4>
-        <p>📧 support@webar-restaurant.com</p>
+        <p>📧 contact@diamondplaza.com</p>
         <p>📞 +91 98765 43210</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== DISH DETAIL PAGE ========== -->
+  <div id="dish-detail" class="app-screen hidden">
+    <div class="detail-container">
+      <button class="btn-back-detail" onclick="showSection('menu-screen')">← Back to Menu</button>
+
+      <div class="detail-image-wrapper">
+        <img id="detail-dish-image" src="" alt="Dish Image">
+      </div>
+
+      <div class="detail-info">
+        <h2 id="detail-dish-name">Dish Name</h2>
+        <p class="detail-price" id="detail-dish-price">₹0</p>
+
+        <div class="detail-nutrition">
+          <div class="nutrition-item">
+            <span class="label">Protein</span>
+            <span id="detail-protein" class="value">--</span>
+          </div>
+          <div class="nutrition-item">
+            <span class="label">Carbs</span>
+            <span id="detail-carbs" class="value">--</span>
+          </div>
+          <div class="nutrition-item">
+            <span class="label">Fiber</span>
+            <span id="detail-fiber" class="value">--</span>
+          </div>
+        </div>
+
+        <div class="detail-ingredients">
+          <h4>Ingredients:</h4>
+          <ul id="detail-ingredients-list"></ul>
+        </div>
+
+        <button class="btn-view-ar" onclick="openARView()">
+          ✨ View in AR
+        </button>
       </div>
     </div>
   </div>
