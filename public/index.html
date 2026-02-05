@@ -180,7 +180,8 @@
   </div>
 
   <!-- ========== A-FRAME AR SCENE ========== -->
-  <a-scene id="ar-scene" arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;"
+  <a-scene id="ar-scene"
+    arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best; sourceParameters: { facingMode: 'environment' };"
     vr-mode-ui="enabled: false" renderer="logarithmicDepthBuffer: true; colorManagement: true;"
     loading-screen="enabled: false">
 
