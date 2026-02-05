@@ -44,10 +44,6 @@
     border-radius: 4px;
 }
 
-.content {
-    /* No animation - always visible */
-}
-
 .header {
     display: flex;
     align-items: flex-start;
