@@ -123,6 +123,11 @@ function showScanner() {
 function showSection(sectionId) {
     hideAllScreens();
     document.getElementById(sectionId).classList.remove('hidden');
+
+    // Add to browser history (except for scanner)
+    if (sectionId !== 'camera-scanner') {
+        window.history.pushState({ page: sectionId }, '', `#${sectionId}`);
+    }
 }
 
 function hideAllScreens() {
