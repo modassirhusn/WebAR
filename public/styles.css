@@ -32,6 +32,17 @@ body {
   display: none !important;
 }
 
+/* ========== LOADING SPINNER ANIMATION ========== */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ========== CAMERA VIEWS (Scanner & AR) ========== */
 .camera-view {
   position: fixed;

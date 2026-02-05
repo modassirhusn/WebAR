@@ -69,6 +69,29 @@ async function startCamera() {
     }
 }
 
+// ========== BROWSER BACK BUTTON HANDLER ==========
+window.addEventListener('popstate', function (event) {
+    // If AR is open, close it
+    const arView = document.getElementById('ar-view');
+    if (!arView.classList.contains('hidden')) {
+        const videoElement = document.getElementById('ar-camera-video');
+        if (videoElement.srcObject) {
+            videoElement.srcObject.getTracks().forEach(track => track.stop());
+            videoElement.srcObject = null;
+        }
+        document.getElementById('ar-camera-container').style.display = 'none';
+        arView.classList.add('hidden');
+    }
+
+    // Show appropriate screen based on hash or default to menu
+    const hash = window.location.hash.substring(1);
+    if (hash && hash !== 'ar') {
+        showSection(hash);
+    } else {
+        showSection('menu-screen');
+    }
+});
+
 // ========== QR SCAN SIMULATION ==========
 function simulateQRScan() {
     const btn = document.querySelector('.btn-demo-scan');
@@ -159,11 +182,18 @@ async function openARView() {
         ingredientsList.appendChild(li);
     });
 
+    // Show loading screen IMMEDIATELY
+    document.getElementById('ar-loading').classList.remove('hidden');
+    document.getElementById('ar-loading').style.display = 'flex';
+
     // Hide all screens
     hideAllScreens();
 
     // Show AR view overlay
     document.getElementById('ar-view').classList.remove('hidden');
+
+    // Add to browser history for back button
+    window.history.pushState({ page: 'ar' }, '', '#ar');
 
     // Start camera and show 3D model
     await startARCameraAndModel();
@@ -171,10 +201,10 @@ async function openARView() {
 
 async function startARCameraAndModel() {
     try {
-        // Get camera container and video element
         const cameraContainer = document.getElementById('ar-camera-container');
         const videoElement = document.getElementById('ar-camera-video');
         const modelViewer = document.getElementById('ar-3d-model');
+        const loadingScreen = document.getElementById('ar-loading');
 
         // Request back camera
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -195,10 +225,16 @@ async function startARCameraAndModel() {
         // Show camera container
         cameraContainer.style.display = 'block';
 
+        // Hide loading screen after camera starts
+        loadingScreen.classList.add('hidden');
+        loadingScreen.style.display = 'none';
+
         console.log('✅ AR Camera started with model:', currentFood.model);
 
     } catch (error) {
         console.error('❌ AR Camera error:', error);
+        document.getElementById('ar-loading').classList.add('hidden');
+        document.getElementById('ar-loading').style.display = 'none';
         alert('Camera access required for AR. Please allow camera permission.');
     }
 }
@@ -217,8 +253,8 @@ function closeAR() {
     // Hide AR view
     document.getElementById('ar-view').classList.add('hidden');
 
-    // Show menu
-    showSection('menu-screen');
+    // Go back in history
+    window.history.back();
 }
 
 function backToDishDetail() {
@@ -235,8 +271,8 @@ function backToDishDetail() {
     // Hide AR view
     document.getElementById('ar-view').classList.add('hidden');
 
-    // Show dish detail
-    showDishDetail(Object.keys(FOOD_DATA).find(key => FOOD_DATA[key] === currentFood));
+    // Go back in history
+    window.history.back();
 }
 
 // ========== ORDER CONTROLS ==========

@@ -260,6 +260,15 @@
     </div>
   </div>
 
+  <!-- ========== AR LOADING SCREEN ========== -->
+  <div id="ar-loading" class="hidden"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9000; background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center; flex-direction: column;">
+    <div
+      style="width: 50px; height: 50px; border: 4px solid rgba(197,168,126,0.3); border-top-color: #c5a87e; border-radius: 50%; animation: spin 1s linear infinite;">
+    </div>
+    <p style="color: #c5a87e; margin-top: 20px; font-size: 16px; font-weight: 600;">Loading your AR view...</p>
+  </div>
+
   <!-- ========== SIMPLE AR VIEW (Camera + 3D Model) ========== -->
   <div id="ar-camera-container"
     style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 7000; background: #000;">
@@ -270,8 +279,8 @@
     <!-- 3D Model Overlay -->
     <model-viewer id="ar-3d-model"
       style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: 60%; z-index: 7001;"
-      camera-controls auto-rotate shadow-intensity="1" exposure="1" camera-orbit="0deg 75deg 2m"
-      min-camera-orbit="auto auto 1m" max-camera-orbit="auto auto 10m">
+      camera-controls shadow-intensity="1" exposure="1" camera-orbit="0deg 75deg 2m" min-camera-orbit="auto auto 1m"
+      max-camera-orbit="auto auto 10m">
     </model-viewer>
   </div>
 
