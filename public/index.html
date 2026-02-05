@@ -27,125 +27,114 @@
 </head>
 
 <body>
-  <!-- Fixed Navbar -->
-  <nav id="app-navbar" class="hidden">
-    <div class="nav-container">
-      <button class="nav-btn" onclick="showHomeScreen()">
-        <span class="icon">🏠</span> Home
-      </button>
-      <div class="nav-links">
-        <button class="nav-link" onclick="showSection('menu-screen')">Menu</button>
-        <button class="nav-link" onclick="showSection('hotel-info')">Hotel Info</button>
-        <button class="nav-link" onclick="showSection('feedback-section')">Feedback</button>
-        <button class="nav-link" onclick="showSection('about-us')">About Us</button>
+  <!-- Fixed Navbar & Professional Header -->
+  <header id="main-header" class="hidden">
+    <div class="top-bar">
+      <div class="header-left">
+        <button class="icon-btn" onclick="showHomeScreen()"><span class="icon">🏠</span></button>
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Search dishes..." onkeyup="filterMenu(this.value)">
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="lang-btn">EN / HI</button>
+        <button class="qr-btn" onclick="toggleQRModal()">📱</button>
       </div>
     </div>
-  </nav>
+
+    <!-- Horizontal Category Tabs -->
+    <div class="category-tabs-wrap">
+      <div class="category-tabs" id="category-tabs">
+        <button class="tab-item active" onclick="filterCategory('North Indian')">North Indian</button>
+        <button class="tab-item" onclick="filterCategory('Oriental Fusion')">Chinese</button>
+        <button class="tab-item" onclick="filterCategory('South Indian')">South Indian</button>
+        <button class="tab-item" onclick="filterCategory('Desserts')">Desserts</button>
+      </div>
+    </div>
+  </header>
 
   <!-- Initial State: Scanner View -->
   <div id="home-scanner" class="scanner-screen">
     <div class="scanner-overlay">
       <div class="scan-target"></div>
-      <h2>Align QR Code to View Menu</h2>
-      <p>Scan the restaurant barcode to explore our reality-based menu.</p>
-      <!-- Demo Trigger -->
-      <button class="btn-demo-scan" onclick="simulateScan()">[ Demo: Click to Scan ]</button>
+      <h2 class="gold-title">WebAR Scan</h2>
+      <p>Scan table QR to explore our 3D Reality Menu</p>
+      <button class="btn-demo-scan" onclick="simulateScan()">[ Demo: Scan Barcode ]</button>
+
+      <div class="scanner-footer">
+        <p>Developed by: <strong>Md Modassir Hussain</strong></p>
+        <p class="mission-small">"We show you reality so you do not pay for fake food."</p>
+      </div>
     </div>
   </div>
 
-  <!-- Detailed Menu (Compact) -->
+  <!-- High-Fidelity Menu Screen -->
   <div id="menu-screen" class="portal-screen hidden">
-    <div class="portal-header">
-      <h1>Gourmet Selection</h1>
-    </div>
-
-    <div class="compact-menu-container">
-      <!-- North Indian -->
-      <div class="menu-section">
-        <h3>North Indian</h3>
-        <ul class="minimal-list">
-          <li onclick="selectFood('butter-chicken')">Butter Chicken <span>$22</span></li>
-          <li onclick="selectFood('paneer-tikka')">Paneer Tikka <span>$16</span></li>
-          <li onclick="selectFood('dal-makhani')">Dal Makhani <span>$14</span></li>
-          <li onclick="selectFood('garlic-naan')">Garlic Naan <span>$5</span></li>
-          <li onclick="selectFood('veg-biryani')">Veg Biryani <span>$18</span></li>
-        </ul>
-      </div>
-
-      <!-- Chinese -->
-      <div class="menu-section">
-        <h3>Oriental Fusion</h3>
-        <ul class="minimal-list">
-          <li onclick="selectFood('hakka-noodles')">Hakka Noodles <span>$15</span></li>
-          <li onclick="selectFood('veg-manchurian')">Veg Manchurian <span>$14</span></li>
-          <li onclick="selectFood('chilli-chicken')">Chilli Chicken <span>$18</span></li>
-          <li onclick="selectFood('dim-sums')">Veg Dim Sums <span>$12</span></li>
-          <li onclick="selectFood('spring-rolls')">Spring Rolls <span>$10</span></li>
-        </ul>
-      </div>
-
-      <!-- South Indian -->
-      <div class="menu-section">
-        <h3>South Indian</h3>
-        <ul class="minimal-list">
-          <li onclick="selectFood('masala-dosa')">Masala Dosa <span>$12</span></li>
-          <li onclick="selectFood('idli-sambhar')">Idli Sambhar <span>$10</span></li>
-          <li onclick="selectFood('medu-vada')">Medu Vada <span>$10</span></li>
-          <li onclick="selectFood('onion-uttapam')">Onion Uttapam <span>$11</span></li>
-          <li onclick="selectFood('lemon-rice')">Lemon Rice <span>$11</span></li>
-        </ul>
-      </div>
-
-      <!-- Desserts -->
-      <div class="menu-section">
-        <h3>Desserts</h3>
-        <ul class="minimal-list">
-          <li onclick="selectFood('gulab-jamun')">Gulab Jamun <span>$6</span></li>
-          <li onclick="selectFood('rasmalai')">Rasmalai <span>$7</span></li>
-          <li onclick="selectFood('kulfi')">Kesar Kulfi <span>$5</span></li>
-          <li onclick="selectFood('brownie')">Choco Brownie <span>$9</span></li>
-          <li onclick="selectFood('ice-cream')">Premium Vanilla <span>$4</span></li>
-        </ul>
-      </div>
+    <div class="menu-scroll-container" id="menu-grid-container">
+      <!-- Dynamic Content Injection -->
     </div>
   </div>
 
-  <!-- Hotel Info Section -->
-  <div id="hotel-info" class="portal-screen hidden">
+  <!-- 3D Pedestal Preview (Pre-AR) -->
+  <div id="preview-mode" class="portal-screen hidden preview-overlay">
+    <div id="pedestal-ui" class="preview-ui">
+      <button class="btn-close-preview" onclick="showSection('menu-screen')">✕</button>
+      <div class="dish-info-card">
+        <h2 id="preview-name">Dish Name</h2>
+        <p id="preview-price">$0.00</p>
+        <button class="btn-view-ar" onclick="enterARMode()">
+          <span class="icon">✨</span> View in your Reality
+        </button>
+      </div>
+    </div>
+    <!-- 3D Preview Canvas Area -->
+    <div id="pedestal-container"></div>
+  </div>
+
+  <!-- QR Modal -->
+  <div id="qr-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close-modal" onclick="toggleQRModal()">✕</button>
+      <h3>Scan to Share</h3>
+      <div class="qr-placeholder">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://webar-dining.vercel.app"
+          alt="QR Code">
+      </div>
+      <p>Invite others to see the reality of our food</p>
+    </div>
+  </div>
+
+  <!-- Info, Feedback, and About sections remain with portal-screen class -->
+  <div id="hotel-info" class="portal-screen hidden content-center">
     <div class="content-card">
-      <h2>About Our Hotel</h2>
-      <p>Established with a vision for culinary transparency, we pride ourselves on purity and craft.</p>
+      <h2>Diamond Plaza</h2>
+      <p>Culinary transparency and pure craft.</p>
       <div class="hotel-details">
-        <p>📍 Location: Diamond Plaza, 5th Floor</p>
-        <p>🕒 Hours: 11:00 AM - 11:00 PM</p>
-        <p>⭐ Rating: 4.9/5</p>
+        <p>📍 5th Floor, Diamond Plaza</p>
+        <p>🕒 11:00 AM - 11:00 PM</p>
       </div>
     </div>
   </div>
 
-  <!-- Feedback Section -->
-  <div id="feedback-section" class="portal-screen hidden">
+  <div id="feedback-section" class="portal-screen hidden content-center">
     <div class="content-card">
       <h2>Guest Feedback</h2>
       <form id="feedback-form" onsubmit="event.preventDefault(); submitFeedback();">
         <input type="text" placeholder="Your Name" required>
-        <textarea placeholder="Tell us about your experience..." rows="4" required></textarea>
+        <textarea placeholder="Your review..." rows="4" required></textarea>
         <button type="submit" class="btn-submit">Submit Review</button>
       </form>
     </div>
   </div>
 
-  <!-- About Us Section -->
-  <div id="about-us" class="portal-screen hidden">
+  <div id="about-us" class="portal-screen hidden content-center">
     <div class="content-card">
-      <h2>Reality over Fake Food</h2>
+      <h2>Md Modassir Hussain</h2>
       <p class="mission-statement">"We show you reality so you do not pay for fake food."</p>
-      <hr>
-      <p>Developed by: <strong>Md Modassir Hussain</strong></p>
+      <p>Bringing transparency to gourmet dining through WebAR.</p>
       <div class="contact-box">
-        <h4>Contact Us</h4>
         <p>📧 support@webar-restaurant.com</p>
-        <p>📞 +91 98765 43210</p>
       </div>
     </div>
   </div>
