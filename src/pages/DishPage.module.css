@@ -15,7 +15,7 @@
     cursor: pointer;
     padding: 0.5rem 0;
     margin-bottom: 1rem;
-    transition: opacity var(--transition);
+    transition: opacity 0.2s ease;
 }
 
 .backBtn:hover {
@@ -24,10 +24,9 @@
 
 .imageWrapper {
     position: relative;
-    border-radius: var(--radius-xl);
+    border-radius: 24px;
     overflow: hidden;
     margin-bottom: 1.5rem;
-    animation: scaleIn 0.4s ease;
 }
 
 .image {
@@ -46,7 +45,7 @@
 }
 
 .content {
-    animation: slideUp 0.4s ease 0.1s both;
+    /* No animation - always visible */
 }
 
 .header {
@@ -79,7 +78,7 @@
 .nutrientCard {
     flex: 1;
     background: var(--bg-secondary);
-    border-radius: var(--radius-md);
+    border-radius: 12px;
     padding: 1rem;
     text-align: center;
 }
@@ -122,7 +121,7 @@
 .ingredient {
     background: var(--bg-secondary);
     padding: 0.5rem 1rem;
-    border-radius: var(--radius-full);
+    border-radius: 9999px;
     font-size: 0.875rem;
     color: var(--text-primary);
 }
@@ -133,29 +132,4 @@
     left: 1rem;
     right: 1rem;
     width: calc(100% - 2rem);
-}
-
-/* Keyframes for animations */
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(16px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
 }

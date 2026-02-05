@@ -9,7 +9,7 @@
 }
 
 .category {
-    animation: slideUp 0.4s ease forwards;
+    /* No animation - just visible */
 }
 
 .categoryTitle {
@@ -41,7 +41,21 @@
     padding: 1rem 1.25rem;
     text-align: left;
     width: 100%;
-    animation: slideUp 0.3s ease both;
+    /* No opacity or animation - always visible */
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.item:active {
+    transform: translateY(0);
 }
 
 .itemInfo {
@@ -60,17 +74,4 @@
     font-size: 0.9375rem;
     font-weight: 600;
     color: var(--accent);
-}
-
-/* Keyframes for slide animation */
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(16px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
