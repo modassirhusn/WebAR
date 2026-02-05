@@ -116,7 +116,7 @@ function simulateQRScan() {
         }
 
         document.getElementById('camera-scanner').classList.add('hidden');
-        document.getElementById('app-navbar').classList.remove('hidden');
+        document.getElementById('hamburger-btn').classList.remove('hidden');
         showSection('menu-screen');
 
         btn.textContent = '[ Demo: Simulate Scan ]';
@@ -128,7 +128,7 @@ function simulateQRScan() {
 function showScanner() {
     hideAllScreens();
     document.getElementById('camera-scanner').classList.remove('hidden');
-    document.getElementById('app-navbar').classList.add('hidden');
+    document.getElementById('hamburger-btn').classList.add('hidden');
     startCamera();
 }
 

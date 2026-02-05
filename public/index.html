@@ -20,6 +20,7 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="hamburger-menu.css">
 </head>
 
 <body>
@@ -40,16 +41,32 @@
     </div>
   </div>
 
-  <!-- ========== PERSISTENT NAVBAR (Hidden until QR scanned) ========== -->
-  <nav id="app-navbar" class="hidden">
-    <button class="nav-home-btn" onclick="showScanner()">
-      <span></span> Home
-    </button>
-    <div class="nav-links-row">
-      <button onclick="showSection('menu-screen')">Menu</button>
-      <button onclick="showSection('hotel-info')">Hotel</button>
-      <button onclick="showSection('feedback-section')">Feedback</button>
-      <button onclick="showSection('about-us')">About Us</button>
+  <!-- ========== HAMBURGER MENU BUTTON ========== -->
+  <button id="hamburger-btn" class="hamburger-menu hidden" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- ========== SLIDE-OUT MENU ========== -->
+  <nav id="slide-menu" class="slide-menu">
+    <button class="close-menu" onclick="toggleMenu()">✕</button>
+    <div class="menu-links">
+      <button onclick="navigateTo('scanner')" data-page="scanner">
+        <span>🏠</span> Home
+      </button>
+      <button onclick="navigateTo('menu-screen')" data-page="menu-screen">
+        <span>🍽️</span> Menu
+      </button>
+      <button onclick="navigateTo('hotel-info')" data-page="hotel-info">
+        <span>🏨</span> Hotel
+      </button>
+      <button onclick="navigateTo('feedback-section')" data-page="feedback-section">
+        <span>💬</span> Feedback
+      </button>
+      <button onclick="navigateTo('about-us')" data-page="about-us">
+        <span>ℹ️</span> About Us
+      </button>
     </div>
   </nav>
 
@@ -285,6 +302,7 @@
   </div>
 
   <!-- Custom JavaScript -->
+  <script src="hamburger-menu.js"></script>
   <script src="app.js"></script>
 </body>
 
