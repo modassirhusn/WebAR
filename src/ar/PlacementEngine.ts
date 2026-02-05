@@ -66,10 +66,6 @@ function cloneVector3(v: Vector3): Vector3 {
     return { x: v.x, y: v.y, z: v.z };
 }
 
-function multiplyVector3(v: Vector3, s: Vector3): Vector3 {
-    return { x: v.x * s.x, y: v.y * s.y, z: v.z * s.z };
-}
-
 /**
  * Check if two bounding boxes collide with spacing buffer
  */
