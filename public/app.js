@@ -5,12 +5,12 @@
 
 // ========== FOOD DATA WITH IMAGES ==========
 const FOOD_DATA = {
-    // North Indian
-    'butter-chicken': { name: 'Butter Chicken', price: 350, image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=800', model: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb', scale: '0.3 0.3 0.3', protein: '32g', carbs: '12g', fiber: '2g', ingredients: ['Boneless Chicken', 'Tomato Purée', 'Fresh Cream', 'Butter', 'Kashmiri Mirch'] },
-    'paneer-tikka': { name: 'Paneer Tikka', price: 280, image: 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=800', model: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb', scale: '0.3 0.3 0.3', protein: '18g', carbs: '8g', fiber: '3g', ingredients: ['Paneer cubes', 'Yogurt', 'Bell Peppers', 'Tandoori Masala'] },
-    'dal-makhani': { name: 'Dal Makhani', price: 220, image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=800', model: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb', scale: '0.35 0.35 0.35', protein: '14g', carbs: '38g', fiber: '12g', ingredients: ['Black Lentils', 'Kidney Beans', 'Butter', 'Garlic'] },
-    'garlic-naan': { name: 'Garlic Naan', price: 60, image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800', model: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb', scale: '0.3 0.3 0.3', protein: '8g', carbs: '45g', fiber: '2g', ingredients: ['Refined Flour', 'Fresh Garlic', 'Coriander'] },
-    'veg-biryani': { name: 'Veg Biryani', price: 320, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800', model: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb', scale: '0.4 0.4 0.4', protein: '12g', carbs: '65g', fiber: '8g', ingredients: ['Basmati Rice', 'Saffron', 'Vegetables', 'Mint'] },
+    // North Indian (Using local 3D models)
+    'butter-chicken': { name: 'Butter Chicken', price: 350, image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=800', model: '/models/burger.glb', scale: '0.5 0.5 0.5', protein: '32g', carbs: '12g', fiber: '2g', ingredients: ['Boneless Chicken', 'Tomato Purée', 'Fresh Cream', 'Butter', 'Kashmiri Mirch'] },
+    'paneer-tikka': { name: 'Paneer Tikka', price: 280, image: 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=800', model: '/models/pizza.glb', scale: '0.5 0.5 0.5', protein: '18g', carbs: '8g', fiber: '3g', ingredients: ['Paneer cubes', 'Yogurt', 'Bell Peppers', 'Tandoori Masala'] },
+    'dal-makhani': { name: 'Dal Makhani', price: 220, image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=800', model: '/models/cake.glb', scale: '0.5 0.5 0.5', protein: '14g', carbs: '38g', fiber: '12g', ingredients: ['Black Lentils', 'Kidney Beans', 'Butter', 'Garlic'] },
+    'garlic-naan': { name: 'Garlic Naan', price: 60, image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800', model: '/models/croissant.glb', scale: '0.5 0.5 0.5', protein: '8g', carbs: '45g', fiber: '2g', ingredients: ['Refined Flour', 'Fresh Garlic', 'Coriander'] },
+    'veg-biryani': { name: 'Veg Biryani', price: 320, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800', model: '/models/pizza (2).glb', scale: '0.5 0.5 0.5', protein: '12g', carbs: '65g', fiber: '8g', ingredients: ['Basmati Rice', 'Saffron', 'Vegetables', 'Mint'] },
 
     // Chinese
     'hakka-noodles': { name: 'Hakka Noodles', price: 240, image: 'https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=800', model: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb', scale: '0.35 0.35 0.35', protein: '10g', carbs: '55g', fiber: '4g', ingredients: ['Egg Noodles', 'Cabbage', 'Soy Sauce'] },
@@ -163,84 +163,38 @@ async function openARView() {
     const model = document.getElementById('ar-model');
     model.setAttribute('gltf-model', currentFood.model);
     model.setAttribute('scale', currentFood.scale);
+    model.setAttribute('position', '0 0 -3');
+    model.setAttribute('rotation', '0 0 0');
+    model.setAttribute('animation', 'property: rotation; to: 0 360 0; loop: true; dur: 10000');
 
     // Show AR view
     hideAllScreens();
     document.getElementById('ar-view').classList.remove('hidden');
-    document.getElementById('ar-scene').style.zIndex = '7000';
 
-    // Start AR camera with environment detection
-    await startARCamera();
-}
+    // Make A-Frame scene visible and active
+    const arScene = document.getElementById('ar-scene');
+    arScene.style.display = 'block';
+    arScene.style.zIndex = '7000';
 
-async function startARCamera() {
-    try {
-        arStream = await navigator.mediaDevices.getUserMedia({
-            video: {
-                facingMode: 'environment',
-                width: { ideal: 1920 },
-                height: { ideal: 1080 }
-            }
-        });
-
-        // Check for dark environment
-        await checkLightingConditions(arStream);
-
-    } catch (err) {
-        console.error('AR Camera error:', err);
-        showARError('Camera access denied. Please allow camera permission.');
-    }
-}
-
-async function checkLightingConditions(stream) {
-    const video = document.createElement('video');
-    video.srcObject = stream;
-    await video.play();
-
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const ctx = canvas.getContext('2d');
-
-    ctx.drawImage(video, 0, 0);
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
-
-    let brightness = 0;
-    for (let i = 0; i < data.length; i += 4) {
-        brightness += (data[i] + data[i + 1] + data[i + 2]) / 3;
-    }
-    brightness = brightness / (data.length / 4);
-
-    if (brightness < 50) {
-        showARError('⚠️ Environment is too dark. Try in a well-lit place for better AR experience.');
-    }
-}
-
-function showARError(message) {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'ar-error-toast';
-    errorDiv.textContent = message;
-    document.getElementById('ar-view').appendChild(errorDiv);
-
-    setTimeout(() => errorDiv.remove(), 4000);
+    // Let A-Frame AR.js handle the camera automatically
+    console.log('✅ AR View opened with model:', currentFood.model);
 }
 
 function closeAR() {
-    if (arStream) {
-        arStream.getTracks().forEach(track => track.stop());
-    }
+    const arScene = document.getElementById('ar-scene');
+    arScene.style.display = 'none';
+    arScene.style.zIndex = '-1';
+
     document.getElementById('ar-view').classList.add('hidden');
-    document.getElementById('ar-scene').style.zIndex = '-1';
     showSection('menu-screen');
 }
 
 function backToDishDetail() {
-    if (arStream) {
-        arStream.getTracks().forEach(track => track.stop());
-    }
+    const arScene = document.getElementById('ar-scene');
+    arScene.style.display = 'none';
+    arScene.style.zIndex = '-1';
+
     document.getElementById('ar-view').classList.add('hidden');
-    document.getElementById('ar-scene').style.zIndex = '-1';
     showDishDetail(Object.keys(FOOD_DATA).find(key => FOOD_DATA[key] === currentFood));
 }
 

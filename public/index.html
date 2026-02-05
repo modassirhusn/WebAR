@@ -263,21 +263,28 @@
   </div>
 
   <!-- ========== A-FRAME AR SCENE ========== -->
-  <a-scene id="ar-scene"
-    arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best; sourceParameters: { facingMode: 'environment' };"
-    vr-mode-ui="enabled: false" renderer="logarithmicDepthBuffer: true; colorManagement: true;"
-    loading-screen="enabled: false" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;">
+  <a-scene id="ar-scene" embedded
+    arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960;"
+    vr-mode-ui="enabled: false"
+    renderer="logarithmicDepthBuffer: true; colorManagement: true; antialias: true; alpha: true;"
+    loading-screen="enabled: false"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;">
 
-    <a-light type="ambient" intensity="1.2"></a-light>
+    <a-assets>
+      <a-asset-item id="burger-model" src="/models/burger.glb"></a-asset-item>
+      <a-asset-item id="pizza-model" src="/models/pizza.glb"></a-asset-item>
+      <a-asset-item id="cake-model" src="/models/cake.glb"></a-asset-item>
+      <a-asset-item id="croissant-model" src="/models/croissant.glb"></a-asset-item>
+      <a-asset-item id="pizza2-model" src="/models/pizza (2).glb"></a-asset-item>
+    </a-assets>
+
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <a-light type="ambient" intensity="1.5"></a-light>
     <a-light type="directional" intensity="0.8" position="1 1 1"></a-light>
 
-    <a-entity id="model-container" position="0 -0.5 -1.5">
-      <a-gltf-model id="ar-model" rotation="0 0 0"
-        animation="property: rotation; to: 0 360 0; loop: true; dur: 15000; easing: linear">
-      </a-gltf-model>
+    <a-entity id="ar-model" gltf-model="" position="0 0 -3" rotation="0 0 0" scale="0.5 0.5 0.5">
     </a-entity>
-
-    <a-entity camera></a-entity>
   </a-scene>
 
   <!-- Custom JavaScript -->
