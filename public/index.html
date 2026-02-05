@@ -152,6 +152,12 @@
 
   <!-- AR Experience UI (Floating Over AR) -->
   <div id="ar-ui" class="hidden">
+    <!-- Instruction Toast -->
+    <div id="placement-instruction" class="instruction-toast">
+      <div class="spinner"></div>
+      <p>Point at floor/table and tap to place dish</p>
+    </div>
+
     <div class="side-ui side-ui-left">
       <div class="nutritional-arrow arrow-up">
         <span class="arrow-icon">▲</span>
@@ -163,15 +169,6 @@
         <span class="arrow-label">Carbs</span>
         <span class="arrow-icon">▼</span>
       </div>
-      <div class="nutritional-arrow arrow-left">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span class="arrow-icon" style="transform: rotate(-90deg);">▲</span>
-          <div style="display: flex; flex-direction: column;">
-            <span id="fiber-value" class="arrow-value"></span>
-            <span class="arrow-label">Fiber</span>
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="side-ui side-ui-right">
@@ -181,21 +178,28 @@
       </div>
     </div>
 
-    <div class="premium-order-panel">
+    <div class="premium-order-panel mobile-bottom-bar">
       <button class="btn-back" onclick="showSection('menu-screen')">Back to Menu</button>
       <button class="btn-order-now" onclick="placeOrder()">Order Now</button>
     </div>
   </div>
 
   <!-- AR Scene -->
-  <a-scene id="ar-scene" embedded arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;"
+  <a-scene id="ar-scene" arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;"
     vr-mode-ui="enabled: false" renderer="logarithmicDepthBuffer: true; colorManagement: true;"
-    loading-screen="enabled: false" style="opacity: 0; transition: opacity 1s;">
+    loading-screen="enabled: false" style="opacity: 0; transition: opacity 1s;" cursor="rayOrigin: mouse"
+    raycaster="objects: .collidable">
 
     <a-light type="ambient" intensity="1.2"></a-light>
     <a-light type="directional" intensity="0.8" position="1 1 1"></a-light>
 
-    <a-entity id="model-container" position="0 -0.5 -1.2">
+    <!-- Placement Reticle (Invisible until surface found) -->
+    <a-entity id="reticle" rotation="-90 0 0" visible="false">
+      <a-ring color="#c5a87e" radius-inner="0.08" radius-outer="0.1" material="shader: flat; opacity: 0.8"></a-ring>
+      <a-circle color="#c5a87e" radius="0.02" material="shader: flat; opacity: 1"></a-circle>
+    </a-entity>
+
+    <a-entity id="model-container" position="0 0 0" visible="false">
       <a-gltf-model id="ar-model" rotation="0 0 0" shadow="cast: true"></a-gltf-model>
     </a-entity>
 

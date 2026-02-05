@@ -563,12 +563,84 @@ body::before {
    Custom A-Frame UI Fixes
    =================================== */
 
+.scanner-screen,
+.portal-screen,
+.menu-screen {
+  height: 100dvh;
+  /* Dynamic viewport height for mobile browser bars */
+}
+
+/* Instruction Toast */
+.instruction-toast {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 12px 24px;
+  border-radius: 50px;
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  pointer-events: none;
+  z-index: 7000;
+  animation: fadeIn 0.5s ease;
+}
+
+.instruction-toast p {
+  font-size: 14px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(197, 168, 126, 0.3);
+  border-top-color: var(--primary-gold);
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile Bottom Bar Alignment */
+.mobile-bottom-bar {
+  bottom: calc(20px + env(safe-area-inset-bottom)) !important;
+  width: 90%;
+  max-width: 400px;
+}
+
+.mobile-bottom-bar .btn-order-now {
+  flex: 2;
+}
+
+/* Full-screen A-Frame Overrides */
 .a-canvas {
-  position: absolute !important;
+  position: fixed !important;
   top: 0 !important;
   left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+}
+
+.side-ui-left {
+  top: 40%;
+  left: 20px;
+}
+
+.side-ui-right {
+  bottom: 120px;
+  top: auto;
+  right: 20px;
+  width: 180px;
+  padding: 15px;
 }
 
 .a-enter-vr,

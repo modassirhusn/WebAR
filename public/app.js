@@ -35,6 +35,7 @@ const FOOD_DATA = {
 const AppState = {
     selectedFood: null,
     isCameraEnabled: false,
+    isPlaced: false,
     typingIntervals: [],
     currentSection: 'home-scanner'
 };
@@ -45,12 +46,46 @@ const AppState = {
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🍽️ Portal System Starting...');
+    initARInteraction();
     showHomeScreen();
 });
+
+function initARInteraction() {
+    const scene = document.querySelector('a-scene');
+    const reticle = document.getElementById('reticle');
+    const container = document.getElementById('model-container');
+    const instruction = document.getElementById('placement-instruction');
+
+    scene.addEventListener('click', () => {
+        if (AppState.selectedFood && !AppState.isPlaced && reticle.getAttribute('visible')) {
+            // Place Model at Reticle Position
+            container.setAttribute('position', reticle.getAttribute('position'));
+            container.setAttribute('visible', 'true');
+            AppState.isPlaced = true;
+
+            // Hide reticle and instruction
+            reticle.setAttribute('visible', 'false');
+            instruction.classList.add('hidden');
+
+            console.log('✅ Model Placed');
+        }
+    });
+
+    // Simple Reticle Follower (in a real app we'd use hit-test, 
+    // but for AR.js/A-Frame we simulate a 'distance-based' placement for stability)
+    setInterval(() => {
+        if (AppState.selectedFood && !AppState.isPlaced) {
+            reticle.setAttribute('visible', 'true');
+            // Mock placement stability (centered on ground-ish)
+            reticle.setAttribute('position', '0 -1 -2');
+        }
+    }, 100);
+}
 
 function showHomeScreen() {
     // Completely reset to scanner
     AppState.currentSection = 'home-scanner';
+    AppState.isPlaced = false;
     document.getElementById('app-navbar').classList.add('hidden');
     document.getElementById('ar-scene').style.opacity = '0';
     document.getElementById('ar-ui').classList.add('hidden');
@@ -59,6 +94,9 @@ function showHomeScreen() {
     document.querySelectorAll('.portal-screen').forEach(s => s.classList.add('hidden'));
     document.getElementById('home-scanner').classList.remove('hidden');
     document.getElementById('home-scanner').style.opacity = '1';
+
+    // Reset model visibility
+    document.getElementById('model-container').setAttribute('visible', 'false');
 }
 
 function showSection(sectionId) {
@@ -125,11 +163,15 @@ async function selectFood(foodId) {
     if (!food) return;
 
     AppState.selectedFood = food;
+    AppState.isPlaced = false;
 
-    // Load AR View
+    // Transition to AR
     document.querySelectorAll('.portal-screen').forEach(s => s.classList.add('hidden'));
     document.getElementById('ar-scene').style.opacity = '1';
     document.getElementById('ar-ui').classList.remove('hidden');
+    document.getElementById('placement-instruction').classList.remove('hidden');
+
+    document.getElementById('model-container').setAttribute('visible', 'false');
 
     loadARModel(food);
     startNutritionalAnimations(food);
@@ -141,18 +183,15 @@ function loadARModel(food) {
     const model = document.getElementById('ar-model');
     if (!model) return;
 
-    model.setAttribute('gltf-model', ''); // Clear first
-    setTimeout(() => {
-        model.setAttribute('gltf-model', food.model);
-        model.setAttribute('scale', food.scale);
-        model.setAttribute('animation', {
-            property: 'rotation',
-            to: '0 360 0',
-            loop: true,
-            dur: 15000,
-            easing: 'linear'
-        });
-    }, 50);
+    model.setAttribute('gltf-model', food.model);
+    model.setAttribute('scale', food.scale);
+    model.setAttribute('animation', {
+        property: 'rotation',
+        to: '0 360 0',
+        loop: true,
+        dur: 20000,
+        easing: 'linear'
+    });
 }
 
 function startNutritionalAnimations(food) {
@@ -161,14 +200,13 @@ function startNutritionalAnimations(food) {
 
     typeEffect(document.getElementById('protein-value'), food.protein);
     typeEffect(document.getElementById('carbs-value'), food.carbs);
-    typeEffect(document.getElementById('fiber-value'), food.fiber);
 
     const container = document.getElementById('ingredients-container');
     container.innerHTML = '';
     food.ingredients.forEach((ing, index) => {
         const li = document.createElement('li');
         container.appendChild(li);
-        setTimeout(() => typeEffect(li, ing, 50), index * 800 + 1000);
+        setTimeout(() => typeEffect(li, ing, 50), index * 600 + 800);
     });
 }
 
