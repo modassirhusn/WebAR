@@ -27,190 +27,179 @@
 </head>
 
 <body>
-  <!-- Premium Menu Screen (Entry Point) -->
-  <div id="menu-screen" class="menu-screen">
-    <div class="menu-header">
-      <span class="gold-title">Signature Experience</span>
-      <h1>Select Your Dish</h1>
-      <p style="color: var(--text-secondary); margin-top: 15px;">Experience gourmet dining in Augmented Reality</p>
-    </div>
-
-    <!-- North Indian Section -->
-    <h2 class="category-title">North Indian Delights</h2>
-    <div class="menu-grid">
-      <div class="food-card" onclick="selectFood('butter-chicken')">
-        <div class="food-image-container">
-          <div class="placeholder-icon">🍗</div>
-        </div>
-        <h3>Butter Chicken</h3>
-        <span class="price">$22.00</span>
-        <p>Creamy tomato gravy with tender tandoori chicken.</p>
-      </div>
-      <div class="food-card" onclick="selectFood('paneer-tikka')">
-        <div class="food-image-container">
-          <div class="placeholder-icon">🧀</div>
-        </div>
-        <h3>Paneer Tikka</h3>
-        <span class="price">$16.00</span>
-        <p>Chargrilled paneer cubes with aromatic spices.</p>
-      </div>
-      <div class="food-card" onclick="selectFood('dal-makhani')">
-        <div class="food-image-container">
-          <div class="placeholder-icon">🍲</div>
-        </div>
-        <h3>Dal Makhani</h3>
-        <span class="price">$14.00</span>
-        <p>Slow-cooked black lentils with white butter and cream.</p>
-      </div>
-      <div class="food-card" onclick="selectFood('veg-biryani')">
-        <div class="food-image-container">
-          <div class="placeholder-icon">🍚</div>
-        </div>
-        <h3>Veg Biryani</h3>
-        <span class="price">$18.00</span>
-        <p>Long grain basmati rice with exotic vegetables and saffron.</p>
+  <!-- Fixed Navbar -->
+  <nav id="app-navbar" class="hidden">
+    <div class="nav-container">
+      <button class="nav-btn" onclick="showHomeScreen()">
+        <span class="icon">🏠</span> Home
+      </button>
+      <div class="nav-links">
+        <button class="nav-link" onclick="showSection('menu-screen')">Menu</button>
+        <button class="nav-link" onclick="showSection('hotel-info')">Hotel Info</button>
+        <button class="nav-link" onclick="showSection('feedback-section')">Feedback</button>
+        <button class="nav-link" onclick="showSection('about-us')">About Us</button>
       </div>
     </div>
+  </nav>
 
-    <!-- Chinese Section -->
-    <h2 class="category-title">Oriental Fusion</h2>
-    <div class="menu-grid">
-      <div class="food-card" onclick="selectFood('hakka-noodles')">
-        <div class="food-image-container">
-          <div class="placeholder-icon">🍜</div>
-        </div>
-        <h3>Hakka Noodles</h3>
-        <span class="price">$15.00</span>
-        <p>Stir-fried noodles with crisp seasonal vegetables.</p>
-      </div>
-      <div class="food-card" onclick="selectFood('veg-manchurian')">
-        <div class="food-image-container">
-          <div class="placeholder-icon">🧆</div>
-        </div>
-        <h3>Veg Manchurian</h3>
-        <span class="price">$14.00</span>
-        <p>Vegetable dumplings in a spicy ginger-garlic sauce.</p>
-      </div>
-      <div class="food-card" onclick="selectFood('chilli-chicken')">
-        <div class="food-image-container">
-          <div class="placeholder-icon">🌶️</div>
-        </div>
-        <h3>Chilli Chicken</h3>
-        <span class="price">$18.00</span>
-        <p>Diced chicken tossed with peppers and green chillies.</p>
-      </div>
-      <div class="food-card" onclick="selectFood('dim-sums')">
-        <div class="food-image-container">
-          <div class="placeholder-icon">🥟</div>
-        </div>
-        <h3>Veg Dim Sums</h3>
-        <span class="price">$12.00</span>
-        <p>Hand-crafted dumplings with wild mushroom filling.</p>
-      </div>
+  <!-- Initial State: Scanner View -->
+  <div id="home-scanner" class="scanner-screen">
+    <div class="scanner-overlay">
+      <div class="scan-target"></div>
+      <h2>Align QR Code to View Menu</h2>
+      <p>Scan the restaurant barcode to explore our reality-based menu.</p>
+      <!-- Demo Trigger -->
+      <button class="btn-demo-scan" onclick="simulateScan()">[ Demo: Click to Scan ]</button>
+    </div>
+  </div>
+
+  <!-- Detailed Menu (Compact) -->
+  <div id="menu-screen" class="portal-screen hidden">
+    <div class="portal-header">
+      <h1>Gourmet Selection</h1>
     </div>
 
-    <!-- South Indian Section -->
-    <h2 class="category-title">South Indian Classics</h2>
-    <div class="menu-grid">
-      <div class="food-card" onclick="selectFood('masala-dosa')">
-        <div class="food-image-container">
-          <div class="placeholder-icon">🥞</div>
-        </div>
-        <h3>Masala Dosa</h3>
-        <span class="price">$12.00</span>
-        <p>Crispy rice crepe with tempered mashed potato.</p>
+    <div class="compact-menu-container">
+      <!-- North Indian -->
+      <div class="menu-section">
+        <h3>North Indian</h3>
+        <ul class="minimal-list">
+          <li onclick="selectFood('butter-chicken')">Butter Chicken <span>$22</span></li>
+          <li onclick="selectFood('paneer-tikka')">Paneer Tikka <span>$16</span></li>
+          <li onclick="selectFood('dal-makhani')">Dal Makhani <span>$14</span></li>
+          <li onclick="selectFood('garlic-naan')">Garlic Naan <span>$5</span></li>
+          <li onclick="selectFood('veg-biryani')">Veg Biryani <span>$18</span></li>
+        </ul>
       </div>
-      <div class="food-card" onclick="selectFood('idli-sambhar')">
-        <div class="food-image-container">
-          <div class="placeholder-icon">⚪</div>
-        </div>
-        <h3>Idli Sambhar</h3>
-        <span class="price">$10.00</span>
-        <p>Fluffy steamed rice cakes with spicy lentil stew.</p>
+
+      <!-- Chinese -->
+      <div class="menu-section">
+        <h3>Oriental Fusion</h3>
+        <ul class="minimal-list">
+          <li onclick="selectFood('hakka-noodles')">Hakka Noodles <span>$15</span></li>
+          <li onclick="selectFood('veg-manchurian')">Veg Manchurian <span>$14</span></li>
+          <li onclick="selectFood('chilli-chicken')">Chilli Chicken <span>$18</span></li>
+          <li onclick="selectFood('dim-sums')">Veg Dim Sums <span>$12</span></li>
+          <li onclick="selectFood('spring-rolls')">Spring Rolls <span>$10</span></li>
+        </ul>
       </div>
-      <div class="food-card" onclick="selectFood('medu-vada')">
-        <div class="food-image-container">
-          <div class="placeholder-icon">🍩</div>
-        </div>
-        <h3>Medu Vada</h3>
-        <span class="price">$10.00</span>
-        <p>Savory lentil doughnuts with fresh curry leaves.</p>
+
+      <!-- South Indian -->
+      <div class="menu-section">
+        <h3>South Indian</h3>
+        <ul class="minimal-list">
+          <li onclick="selectFood('masala-dosa')">Masala Dosa <span>$12</span></li>
+          <li onclick="selectFood('idli-sambhar')">Idli Sambhar <span>$10</span></li>
+          <li onclick="selectFood('medu-vada')">Medu Vada <span>$10</span></li>
+          <li onclick="selectFood('onion-uttapam')">Onion Uttapam <span>$11</span></li>
+          <li onclick="selectFood('lemon-rice')">Lemon Rice <span>$11</span></li>
+        </ul>
       </div>
-      <div class="food-card" onclick="selectFood('lemon-rice')">
-        <div class="food-image-container">
-          <div class="placeholder-icon">🍋</div>
-        </div>
-        <h3>Lemon Rice</h3>
-        <span class="price">$11.00</span>
-        <p>Tangy lemon-infused rice with crunchy peanuts.</p>
+
+      <!-- Desserts -->
+      <div class="menu-section">
+        <h3>Desserts</h3>
+        <ul class="minimal-list">
+          <li onclick="selectFood('gulab-jamun')">Gulab Jamun <span>$6</span></li>
+          <li onclick="selectFood('rasmalai')">Rasmalai <span>$7</span></li>
+          <li onclick="selectFood('kulfi')">Kesar Kulfi <span>$5</span></li>
+          <li onclick="selectFood('brownie')">Choco Brownie <span>$9</span></li>
+          <li onclick="selectFood('ice-cream')">Premium Vanilla <span>$4</span></li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <!-- AR Experience UI (Initially hidden) -->
+  <!-- Hotel Info Section -->
+  <div id="hotel-info" class="portal-screen hidden">
+    <div class="content-card">
+      <h2>About Our Hotel</h2>
+      <p>Established with a vision for culinary transparency, we pride ourselves on purity and craft.</p>
+      <div class="hotel-details">
+        <p>📍 Location: Diamond Plaza, 5th Floor</p>
+        <p>🕒 Hours: 11:00 AM - 11:00 PM</p>
+        <p>⭐ Rating: 4.9/5</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback Section -->
+  <div id="feedback-section" class="portal-screen hidden">
+    <div class="content-card">
+      <h2>Guest Feedback</h2>
+      <form id="feedback-form" onsubmit="event.preventDefault(); submitFeedback();">
+        <input type="text" placeholder="Your Name" required>
+        <textarea placeholder="Tell us about your experience..." rows="4" required></textarea>
+        <button type="submit" class="btn-submit">Submit Review</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- About Us Section -->
+  <div id="about-us" class="portal-screen hidden">
+    <div class="content-card">
+      <h2>Reality over Fake Food</h2>
+      <p class="mission-statement">"We show you reality so you do not pay for fake food."</p>
+      <hr>
+      <p>Developed by: <strong>Md Modassir Hussain</strong></p>
+      <div class="contact-box">
+        <h4>Contact Us</h4>
+        <p>📧 support@webar-restaurant.com</p>
+        <p>📞 +91 98765 43210</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AR Experience UI (Floating Over AR) -->
   <div id="ar-ui" class="hidden">
-    <!-- Left Side: Nutritional Arrows -->
     <div class="side-ui side-ui-left">
-      <!-- Protein (Upper) -->
       <div class="nutritional-arrow arrow-up">
         <span class="arrow-icon">▲</span>
         <span class="arrow-label">Protein</span>
-        <span id="protein-value" class="arrow-value">24g</span>
+        <span id="protein-value" class="arrow-value"></span>
       </div>
-
-      <!-- Carbs (Lower) -->
       <div class="nutritional-arrow arrow-down">
-        <span id="carbs-value" class="arrow-value">45g</span>
+        <span id="carbs-value" class="arrow-value"></span>
         <span class="arrow-label">Carbs</span>
         <span class="arrow-icon">▼</span>
       </div>
-
-      <!-- Fiber (Left) -->
       <div class="nutritional-arrow arrow-left">
         <div style="display: flex; align-items: center; gap: 8px;">
           <span class="arrow-icon" style="transform: rotate(-90deg);">▲</span>
           <div style="display: flex; flex-direction: column;">
-            <span id="fiber-value" class="arrow-value">4g</span>
+            <span id="fiber-value" class="arrow-value"></span>
             <span class="arrow-label">Fiber</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Right Side: Ingredients -->
     <div class="side-ui side-ui-right">
       <div class="ingredients-list">
         <h4>Ingredients</h4>
-        <ul id="ingredients-container">
-          <!-- Dynamic -->
-        </ul>
+        <ul id="ingredients-container"></ul>
       </div>
     </div>
 
-    <!-- Bottom: Order Actions -->
     <div class="premium-order-panel">
-      <button class="btn-back" onclick="goBackToMenu()">Back</button>
+      <button class="btn-back" onclick="showSection('menu-screen')">Back to Menu</button>
       <button class="btn-order-now" onclick="placeOrder()">Order Now</button>
     </div>
   </div>
 
   <!-- AR Scene -->
-  <a-scene id="ar-scene" embedded arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix;"
-    vr-mode-ui="enabled: false" gesture-detector renderer="logarithmicDepthBuffer: true; colorManagement: true;"
-    loading-screen="enabled: false">
+  <a-scene id="ar-scene" embedded arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;"
+    vr-mode-ui="enabled: false" renderer="logarithmicDepthBuffer: true; colorManagement: true;"
+    loading-screen="enabled: false" style="opacity: 0; transition: opacity 1s;">
 
-    <!-- Camera -->
-    <a-entity camera look-controls-enabled="false"></a-entity>
-
-    <!-- Lighting -->
     <a-light type="ambient" intensity="1.2"></a-light>
     <a-light type="directional" intensity="0.8" position="1 1 1"></a-light>
 
-    <!-- 3D Model Container -->
     <a-entity id="model-container" position="0 -0.5 -1.2">
-      <!-- Fixed real-world scaling will be handled via JS -->
       <a-gltf-model id="ar-model" rotation="0 0 0" shadow="cast: true"></a-gltf-model>
     </a-entity>
+
+    <a-entity camera></a-entity>
   </a-scene>
 
   <!-- Custom JavaScript -->

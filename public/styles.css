@@ -141,85 +141,270 @@ body::before {
   -webkit-text-fill-color: transparent;
 }
 
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 30px;
-  max-width: 1400px;
-  margin: 0 auto;
+/* ===================================
+   Scanner & Search Flow
+   =================================== */
+
+.scanner-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  padding-bottom: 100px;
-}
-
-.food-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--border-radius);
-  padding: 35px;
-  text-align: center;
-  transition: all var(--transition-smooth);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.food-card:hover {
-  border-color: var(--primary-gold);
-  background: rgba(255, 255, 255, 0.05);
-  transform: translateY(-12px);
-  box-shadow: 0 0 40px rgba(197, 168, 126, 0.15);
-}
-
-.food-image-container {
-  width: 100%;
-  aspect-ratio: 1;
-  margin-bottom: 25px;
+  height: 100%;
+  z-index: 5000;
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-  border-radius: 50%;
+  transition: opacity 0.8s ease;
 }
 
-.food-image-container .placeholder-icon {
-  font-size: 80px;
-  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.5));
-  transition: transform 0.3s ease;
+.scanner-overlay {
+  text-align: center;
+  padding: 40px;
+  z-index: 5001;
 }
 
-.food-card:hover .placeholder-icon {
-  transform: scale(1.1) rotate(5deg);
+.scan-target {
+  width: 250px;
+  height: 250px;
+  border: 4px solid var(--primary-gold);
+  border-radius: 40px;
+  margin: 0 auto 30px;
+  position: relative;
+  box-shadow: 0 0 50px rgba(197, 168, 126, 0.3);
+  animation: pulseScan 2s infinite;
 }
 
-.food-card h3 {
-  font-size: 26px;
-  margin-bottom: 10px;
-  color: #fff;
+@keyframes pulseScan {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
 }
 
-.food-card .price {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-gold);
-  margin-bottom: 15px;
-  display: block;
+.scanner-overlay h2 {
+  font-size: 24px;
+  margin-bottom: 12px;
 }
 
-.food-card p {
-  font-size: 14px;
+.scanner-overlay p {
   color: var(--text-secondary);
-  line-height: 1.6;
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+
+.btn-demo-scan {
+  background: var(--primary-gold);
+  border: none;
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* ===================================
-   AR Experience UI
+   Fixed Top-Left Navbar
    =================================== */
 
-.side-ui {
+#app-navbar {
   position: fixed;
-  z-index: 1000;
+  top: 20px;
+  left: 20px;
+  z-index: 4000;
+  transition: opacity 0.5s;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  padding: 8px 20px;
+  border-radius: 50px;
+  border: 1px solid var(--glass-border);
+}
+
+.nav-btn {
+  background: var(--primary-gold);
+  color: #000;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 40px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: var(--primary-gold);
+}
+
+/* ===================================
+   Portal Screen & Portions
+   =================================== */
+
+.portal-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(50px);
+  z-index: 3000;
+  padding: 100px 20px 40px;
+  overflow-y: auto;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s;
+}
+
+.portal-screen.hidden {
+  transform: translateY(100%);
+  opacity: 0;
   pointer-events: none;
+}
+
+.portal-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.portal-header h1 {
+  font-size: 32px;
+  letter-spacing: -1px;
+}
+
+.compact-menu-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.menu-section {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 25px;
+}
+
+.menu-section h3 {
+  color: var(--text-gold);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 10px;
+}
+
+.minimal-list {
+  list-style: none;
+}
+
+.minimal-list li {
+  padding: 12px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: padding-left 0.3s;
+}
+
+.minimal-list li:last-child {
+  border-bottom: none;
+}
+
+.minimal-list li span {
+  font-weight: 700;
+  color: #fff;
+}
+
+.minimal-list li:hover {
+  padding-left: 10px;
+  color: var(--primary-gold);
+}
+
+/* ===================================
+   Content Cards (Info, Feedback, About)
+   =================================== */
+
+.content-card {
+  max-width: 600px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 30px;
+  padding: 40px;
+  border: 1px solid var(--glass-border);
+}
+
+.content-card h2 {
+  margin-bottom: 20px;
+  color: var(--text-gold);
+}
+
+.mission-statement {
+  font-style: italic;
+  font-size: 18px;
+  color: #fff;
+  margin: 20px 0;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 15px;
+  background: var(--primary-gold);
+  border: none;
+  border-radius: 15px;
+  font-weight: 800;
+  margin-top: 20px;
+}
+
+/* ===================================
+   AR UI Layer
+   =================================== */
+
+#ar-ui {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 6000;
+  pointer-events: none;
+}
+
+.side-ui {
+  position: absolute;
+  pointer-events: auto;
 }
 
 .side-ui-left {
@@ -235,47 +420,57 @@ body::before {
   top: 50%;
   right: 30px;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  padding: 30px;
-  border-radius: 30px;
-  width: 240px;
-  pointer-events: auto;
-  box-shadow: var(--shadow-premium);
+  width: 220px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 20px;
 }
 
-/* Typing & Pulse Animation for UI */
+/* Keep existing nutritional arrow styles from index.css logic... */
 .nutritional-arrow {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  transition: all 0.5s ease;
-}
-
-.arrow-icon {
-  font-size: 28px;
-  filter: drop-shadow(0 0 10px currentColor);
-}
-
-.arrow-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #fff;
-  opacity: 0.7;
+  animation: float 3s infinite ease-in-out;
 }
 
 .arrow-value {
   font-size: 18px;
   font-weight: 800;
-  color: #fff;
-  min-height: 24px;
-  display: inline-block;
 }
 
-/* Typing Cursor Effect */
+.arrow-label {
+  font-size: 10px;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0)
+  }
+
+  50% {
+    transform: translateY(-15px)
+  }
+}
+
+.premium-order-panel {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+  pointer-events: auto;
+}
+
+/* Typing & Pulse Animation for UI */
 .typing-cursor::after {
   content: '|';
   animation: blink 0.8s infinite;
@@ -325,17 +520,6 @@ body::before {
 /* ===================================
    Premium Buttons
    =================================== */
-
-.premium-order-panel {
-  position: fixed;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1500;
-  display: flex;
-  gap: 20px;
-  pointer-events: auto;
-}
 
 .btn-order-now {
   background: white;
@@ -410,21 +594,4 @@ body::before {
 
 .arrow-left {
   color: #4facfe;
-}
-
-/* Subtle Floating Animation for AR Overlays */
-.nutritional-arrow {
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-15px);
-  }
 }
