@@ -41,8 +41,7 @@
     padding: 1rem 1.25rem;
     text-align: left;
     width: 100%;
-    animation: slideUp 0.3s ease forwards;
-    opacity: 0;
+    animation: slideUp 0.3s ease both;
 }
 
 .itemInfo {
