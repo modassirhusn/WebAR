@@ -1,14 +1,27 @@
 /**
  * Advanced Multi-Object AR Placement Engine
  * Handles surface detection, collision avoidance, and spatial layout
+ * Uses plain JS types (no Three.js dependency)
  */
 
-import * as THREE from 'three';
+// Vector3 type for 3D positions
+export interface Vector3 {
+    x: number;
+    y: number;
+    z: number;
+}
+
+// Euler rotation type
+export interface Euler {
+    x: number;
+    y: number;
+    z: number;
+}
 
 // Types
 export interface BoundingBox {
-    min: THREE.Vector3;
-    max: THREE.Vector3;
+    min: Vector3;
+    max: Vector3;
     width: number;
     depth: number;
     height: number;
@@ -17,22 +30,22 @@ export interface BoundingBox {
 export interface PlacedObject {
     id: string;
     modelUrl: string;
-    position: THREE.Vector3;
-    rotation: THREE.Euler;
-    scale: THREE.Vector3;
+    position: Vector3;
+    rotation: Euler;
+    scale: Vector3;
     boundingBox: BoundingBox;
 }
 
 export interface SurfaceBounds {
-    center: THREE.Vector3;
+    center: Vector3;
     width: number;
     depth: number;
-    corners: THREE.Vector3[];
+    corners: Vector3[];
 }
 
 export interface PlacementResult {
     success: boolean;
-    position?: THREE.Vector3;
+    position?: Vector3;
     reason?: string;
 }
 
@@ -44,22 +57,17 @@ const CONFIG = {
     GRID_THRESHOLD: 6,        // Switch to radial layout above this count
 };
 
-/**
- * Calculate bounding box for a 3D model
- */
-export function calculateBoundingBox(
-    mesh: THREE.Object3D,
-    scale: THREE.Vector3
-): BoundingBox {
-    const box = new THREE.Box3().setFromObject(mesh);
+// Helper functions
+function createVector3(x: number, y: number, z: number): Vector3 {
+    return { x, y, z };
+}
 
-    return {
-        min: box.min.clone().multiply(scale),
-        max: box.max.clone().multiply(scale),
-        width: (box.max.x - box.min.x) * scale.x,
-        depth: (box.max.z - box.min.z) * scale.z,
-        height: (box.max.y - box.min.y) * scale.y,
-    };
+function cloneVector3(v: Vector3): Vector3 {
+    return { x: v.x, y: v.y, z: v.z };
+}
+
+function multiplyVector3(v: Vector3, s: Vector3): Vector3 {
+    return { x: v.x * s.x, y: v.y * s.y, z: v.z * s.z };
 }
 
 /**
@@ -67,9 +75,9 @@ export function calculateBoundingBox(
  */
 export function checkCollision(
     box1: BoundingBox,
-    pos1: THREE.Vector3,
+    pos1: Vector3,
     box2: BoundingBox,
-    pos2: THREE.Vector3,
+    pos2: Vector3,
     spacing: number = CONFIG.MIN_SPACING
 ): boolean {
     const halfWidth1 = box1.width / 2 + spacing;
@@ -87,7 +95,7 @@ export function checkCollision(
  * Check if position is within surface bounds
  */
 export function isWithinSurface(
-    position: THREE.Vector3,
+    position: Vector3,
     boundingBox: BoundingBox,
     surfaceBounds: SurfaceBounds
 ): boolean {
@@ -107,26 +115,22 @@ export function isWithinSurface(
 
 /**
  * Grid placement algorithm for small sets (≤6 items)
- * Arranges items in rows like dishes on a table
  */
 export function calculateGridLayout(
     items: BoundingBox[],
     surfaceBounds: SurfaceBounds
-): THREE.Vector3[] {
-    const positions: THREE.Vector3[] = [];
+): Vector3[] {
+    const positions: Vector3[] = [];
     const count = items.length;
 
-    // Calculate optimal grid dimensions
     const cols = Math.min(3, count);
     const rows = Math.ceil(count / cols);
 
-    // Calculate total dimensions needed
     const maxWidth = Math.max(...items.map(b => b.width));
     const maxDepth = Math.max(...items.map(b => b.depth));
     const cellWidth = maxWidth + CONFIG.MIN_SPACING;
     const cellDepth = maxDepth + CONFIG.MIN_SPACING;
 
-    // Center the grid on surface
     const startX = surfaceBounds.center.x - ((cols - 1) * cellWidth) / 2;
     const startZ = surfaceBounds.center.z - ((rows - 1) * cellDepth) / 2;
 
@@ -134,7 +138,7 @@ export function calculateGridLayout(
         const col = i % cols;
         const row = Math.floor(i / cols);
 
-        positions.push(new THREE.Vector3(
+        positions.push(createVector3(
             startX + col * cellWidth,
             surfaceBounds.center.y,
             startZ + row * cellDepth
@@ -146,21 +150,18 @@ export function calculateGridLayout(
 
 /**
  * Radial placement algorithm for larger sets (>6 items)
- * Arranges items in concentric circles from center
  */
 export function calculateRadialLayout(
     items: BoundingBox[],
     surfaceBounds: SurfaceBounds
-): THREE.Vector3[] {
-    const positions: THREE.Vector3[] = [];
+): Vector3[] {
+    const positions: Vector3[] = [];
     const count = items.length;
 
-    // Place first item at center
-    positions.push(surfaceBounds.center.clone());
+    positions.push(cloneVector3(surfaceBounds.center));
 
     if (count === 1) return positions;
 
-    // Calculate rings
     let placedCount = 1;
     let ring = 1;
     const baseRadius = Math.max(...items.map(b => Math.max(b.width, b.depth))) + CONFIG.MIN_SPACING;
@@ -173,8 +174,8 @@ export function calculateRadialLayout(
         const angleStep = (2 * Math.PI) / itemsInRing;
 
         for (let i = 0; i < itemsInRing && placedCount < count; i++) {
-            const angle = i * angleStep - Math.PI / 2; // Start from top
-            positions.push(new THREE.Vector3(
+            const angle = i * angleStep - Math.PI / 2;
+            positions.push(createVector3(
                 surfaceBounds.center.x + Math.cos(angle) * radius,
                 surfaceBounds.center.y,
                 surfaceBounds.center.z + Math.sin(angle) * radius
@@ -189,7 +190,6 @@ export function calculateRadialLayout(
 
 /**
  * Find valid placement position for a new object
- * Avoids collisions with existing objects
  */
 export function findValidPlacement(
     newBox: BoundingBox,
@@ -200,25 +200,20 @@ export function findValidPlacement(
         return { success: false, reason: 'Surface capacity reached' };
     }
 
-    // Get all bounding boxes for layout calculation
     const allBoxes = [...existingObjects.map(o => o.boundingBox), newBox];
 
-    // Choose layout strategy based on count
     const positions = allBoxes.length <= CONFIG.GRID_THRESHOLD
         ? calculateGridLayout(allBoxes, surfaceBounds)
         : calculateRadialLayout(allBoxes, surfaceBounds);
 
     const newPosition = positions[positions.length - 1];
 
-    // Validate position is within surface
     if (!isWithinSurface(newPosition, newBox, surfaceBounds)) {
         return { success: false, reason: 'Position outside surface bounds' };
     }
 
-    // Check for collisions with existing objects
     for (const obj of existingObjects) {
         if (checkCollision(newBox, newPosition, obj.boundingBox, obj.position)) {
-            // Try to find alternative position
             const altPosition = findAlternativePosition(newBox, existingObjects, surfaceBounds);
             if (altPosition) {
                 return { success: true, position: altPosition };
@@ -237,7 +232,7 @@ function findAlternativePosition(
     box: BoundingBox,
     existingObjects: PlacedObject[],
     surfaceBounds: SurfaceBounds
-): THREE.Vector3 | null {
+): Vector3 | null {
     const step = box.width + CONFIG.MIN_SPACING;
     const maxAttempts = 36;
 
@@ -245,7 +240,7 @@ function findAlternativePosition(
         const angle = (i / maxAttempts) * 2 * Math.PI;
         const radius = step * (1 + Math.floor(i / 8));
 
-        const testPos = new THREE.Vector3(
+        const testPos = createVector3(
             surfaceBounds.center.x + Math.cos(angle) * radius,
             surfaceBounds.center.y,
             surfaceBounds.center.z + Math.sin(angle) * radius
@@ -273,8 +268,8 @@ function findAlternativePosition(
 export function reflowLayout(
     objects: PlacedObject[],
     surfaceBounds: SurfaceBounds
-): Map<string, THREE.Vector3> {
-    const newPositions = new Map<string, THREE.Vector3>();
+): Map<string, Vector3> {
+    const newPositions = new Map<string, Vector3>();
     const boxes = objects.map(o => o.boundingBox);
 
     const positions = objects.length <= CONFIG.GRID_THRESHOLD
@@ -288,63 +283,4 @@ export function reflowLayout(
     });
 
     return newPositions;
-}
-
-/**
- * Create ghost preview mesh for placement feedback
- */
-export function createGhostPreview(
-    originalMesh: THREE.Object3D,
-    isValid: boolean
-): THREE.Object3D {
-    const ghost = originalMesh.clone();
-
-    ghost.traverse((child) => {
-        if (child instanceof THREE.Mesh) {
-            child.material = new THREE.MeshBasicMaterial({
-                color: isValid ? 0x00ff00 : 0xff0000,
-                transparent: true,
-                opacity: 0.4,
-                wireframe: false,
-            });
-        }
-    });
-
-    return ghost;
-}
-
-/**
- * Animate object spawn with scale-up effect
- */
-export function animateSpawn(
-    object: THREE.Object3D,
-    targetScale: THREE.Vector3,
-    duration: number = 300
-): Promise<void> {
-    return new Promise((resolve) => {
-        object.scale.set(0, 0, 0);
-        const startTime = performance.now();
-
-        function animate(currentTime: number) {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-
-            // Ease-out cubic
-            const eased = 1 - Math.pow(1 - progress, 3);
-
-            object.scale.set(
-                targetScale.x * eased,
-                targetScale.y * eased,
-                targetScale.z * eased
-            );
-
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
-                resolve();
-            }
-        }
-
-        requestAnimationFrame(animate);
-    });
 }
