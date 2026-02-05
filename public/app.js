@@ -71,7 +71,7 @@ async function startCamera() {
 
 // ========== BROWSER BACK BUTTON HANDLER ==========
 window.addEventListener('popstate', function (event) {
-    // If AR is open, close it
+    // If AR is open, close it and show dish detail or menu
     const arView = document.getElementById('ar-view');
     if (!arView.classList.contains('hidden')) {
         const videoElement = document.getElementById('ar-camera-video');
@@ -81,14 +81,26 @@ window.addEventListener('popstate', function (event) {
         }
         document.getElementById('ar-camera-container').style.display = 'none';
         arView.classList.add('hidden');
+
+        // Show dish detail if we have currentFood, otherwise menu
+        if (currentFood) {
+            showDishDetail(Object.keys(FOOD_DATA).find(key => FOOD_DATA[key] === currentFood));
+        } else {
+            hideAllScreens();
+            document.getElementById('menu-screen').classList.remove('hidden');
+        }
+        return;
     }
 
-    // Show appropriate screen based on hash or default to menu
+    // Normal navigation - show appropriate screen based on hash
     const hash = window.location.hash.substring(1);
     if (hash && hash !== 'ar') {
-        showSection(hash);
-    } else {
-        showSection('menu-screen');
+        hideAllScreens();
+        document.getElementById(hash).classList.remove('hidden');
+    } else if (!hash) {
+        // No hash means we're at the start - show menu
+        hideAllScreens();
+        document.getElementById('menu-screen').classList.remove('hidden');
     }
 });
 
@@ -258,8 +270,9 @@ function closeAR() {
     // Hide AR view
     document.getElementById('ar-view').classList.add('hidden');
 
-    // Go back in history
-    window.history.back();
+    // Show menu directly
+    hideAllScreens();
+    document.getElementById('menu-screen').classList.remove('hidden');
 }
 
 function backToDishDetail() {
@@ -276,8 +289,13 @@ function backToDishDetail() {
     // Hide AR view
     document.getElementById('ar-view').classList.add('hidden');
 
-    // Go back in history
-    window.history.back();
+    // Show dish detail directly
+    if (currentFood) {
+        showDishDetail(Object.keys(FOOD_DATA).find(key => FOOD_DATA[key] === currentFood));
+    } else {
+        hideAllScreens();
+        document.getElementById('menu-screen').classList.remove('hidden');
+    }
 }
 
 // ========== ORDER CONTROLS ==========
