@@ -137,7 +137,7 @@ function showDishDetail(foodId) {
     document.getElementById('dish-detail').classList.remove('hidden');
 }
 
-// ========== AR VIEW WITH ERROR DETECTION ==========
+// ========== AR VIEW WITH WORKING CAMERA ==========
 async function openARView() {
     if (!currentFood) return;
 
@@ -159,42 +159,83 @@ async function openARView() {
         ingredientsList.appendChild(li);
     });
 
-    // Load 3D model
-    const model = document.getElementById('ar-model');
-    model.setAttribute('gltf-model', currentFood.model);
-    model.setAttribute('scale', currentFood.scale);
-    model.setAttribute('position', '0 0 -3');
-    model.setAttribute('rotation', '0 0 0');
-    model.setAttribute('animation', 'property: rotation; to: 0 360 0; loop: true; dur: 10000');
-
-    // Show AR view
+    // Hide all screens
     hideAllScreens();
+
+    // Show AR view overlay
     document.getElementById('ar-view').classList.remove('hidden');
 
-    // Make A-Frame scene visible and active
-    const arScene = document.getElementById('ar-scene');
-    arScene.style.display = 'block';
-    arScene.style.zIndex = '7000';
+    // Start camera and show 3D model
+    await startARCameraAndModel();
+}
 
-    // Let A-Frame AR.js handle the camera automatically
-    console.log('✅ AR View opened with model:', currentFood.model);
+async function startARCameraAndModel() {
+    try {
+        // Get camera container and video element
+        const cameraContainer = document.getElementById('ar-camera-container');
+        const videoElement = document.getElementById('ar-camera-video');
+        const modelViewer = document.getElementById('ar-3d-model');
+
+        // Request back camera
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: 'environment',
+                width: { ideal: 1920 },
+                height: { ideal: 1080 }
+            }
+        });
+
+        // Set video source to camera stream
+        videoElement.srcObject = stream;
+        await videoElement.play();
+
+        // Load 3D model into model-viewer
+        modelViewer.src = currentFood.model;
+
+        // Show camera container
+        cameraContainer.style.display = 'block';
+
+        console.log('✅ AR Camera started with model:', currentFood.model);
+
+    } catch (error) {
+        console.error('❌ AR Camera error:', error);
+        alert('Camera access required for AR. Please allow camera permission.');
+    }
 }
 
 function closeAR() {
-    const arScene = document.getElementById('ar-scene');
-    arScene.style.display = 'none';
-    arScene.style.zIndex = '-1';
+    // Stop camera
+    const videoElement = document.getElementById('ar-camera-video');
+    if (videoElement.srcObject) {
+        videoElement.srcObject.getTracks().forEach(track => track.stop());
+        videoElement.srcObject = null;
+    }
 
+    // Hide camera container
+    document.getElementById('ar-camera-container').style.display = 'none';
+
+    // Hide AR view
     document.getElementById('ar-view').classList.add('hidden');
+
+    // Show menu
     showSection('menu-screen');
 }
 
 function backToDishDetail() {
-    const arScene = document.getElementById('ar-scene');
-    arScene.style.display = 'none';
-    arScene.style.zIndex = '-1';
+    // Stop camera
+    const videoElement = document.getElementById('ar-camera-video');
+    if (videoElement.srcObject) {
+        videoElement.srcObject.getTracks().forEach(track => track.stop());
+        videoElement.srcObject = null;
+    }
 
+    // Hide camera container
+    document.getElementById('ar-camera-container').style.display = 'none';
+
+    // Hide AR view
     document.getElementById('ar-view').classList.add('hidden');
+
+    // Show dish detail
     showDishDetail(Object.keys(FOOD_DATA).find(key => FOOD_DATA[key] === currentFood));
 }
 
