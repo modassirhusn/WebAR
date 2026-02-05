@@ -7,8 +7,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
 
-  <title>Premium WebAR Dining</title>
-  <meta name="description" content="Life-size 3D dining experience in your browser">
+  <title>WebAR Menu - Reality Dining</title>
+  <meta name="description" content="See your food in Reality before you order">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,177 +19,178 @@
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <!-- AR.js for webcam support -->
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-  <!-- Gesture Detector Component -->
-  <script src="https://unpkg.com/aframe-gesture-detector@4.2.2/dist/gesture-detector.js"></script>
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <!-- Fixed Navbar & Professional Header -->
-  <header id="main-header" class="hidden">
-    <div class="top-bar">
-      <div class="header-left">
-        <button class="icon-btn" onclick="showHomeScreen()"><span class="icon">🏠</span></button>
-        <div class="search-wrap">
-          <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Search dishes..." onkeyup="filterMenu(this.value)">
-        </div>
-      </div>
-      <div class="header-right">
-        <button class="lang-btn">EN / HI</button>
-        <button class="qr-btn" onclick="toggleQRModal()">📱</button>
-      </div>
+  <!-- ========== PERSISTENT NAVBAR (Top-Left) ========== -->
+  <nav id="app-navbar">
+    <button class="nav-home-btn" onclick="showHomeScreen()">
+      <span>🏠</span> Home
+    </button>
+    <div class="nav-links-row">
+      <button onclick="showSection('menu-screen')">Menu</button>
+      <button onclick="showSection('hotel-info')">Hotel</button>
+      <button onclick="showSection('feedback-section')">Feedback</button>
+      <button onclick="showSection('about-us')">About Us</button>
     </div>
+  </nav>
 
-    <!-- Horizontal Category Tabs -->
-    <div class="category-tabs-wrap">
-      <div class="category-tabs" id="category-tabs">
-        <button class="tab-item active" onclick="filterCategory('North Indian')">North Indian</button>
-        <button class="tab-item" onclick="filterCategory('Oriental Fusion')">Chinese</button>
-        <button class="tab-item" onclick="filterCategory('South Indian')">South Indian</button>
-        <button class="tab-item" onclick="filterCategory('Desserts')">Desserts</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Initial State: Scanner View -->
-  <div id="home-scanner" class="scanner-screen">
+  <!-- ========== SCANNER VIEW (Camera First) ========== -->
+  <div id="home-scanner" class="full-screen-view">
     <div class="scanner-overlay">
-      <div class="scan-target"></div>
-      <h2 class="gold-title">WebAR Scan</h2>
-      <p>Scan table QR to explore our 3D Reality Menu</p>
-      <button class="btn-demo-scan" onclick="simulateScan()">[ Demo: Scan Barcode ]</button>
-
-      <div class="scanner-footer">
-        <p>Developed by: <strong>Md Modassir Hussain</strong></p>
-        <p class="mission-small">"We show you reality so you do not pay for fake food."</p>
-      </div>
+      <div class="scan-frame"></div>
+      <h2>Scan Hotel Menu QR</h2>
+      <p>Point your camera at the table QR code</p>
+      <button class="btn-scan-demo" onclick="simulateScan()">[ Demo: Tap to Scan ]</button>
+    </div>
+    <div class="scanner-branding">
+      <p><strong>Md Modassir Hussain</strong></p>
+      <p class="tagline">"We show you reality so you do not pay for fake food."</p>
     </div>
   </div>
 
-  <!-- High-Fidelity Menu Screen -->
-  <div id="menu-screen" class="portal-screen hidden">
-    <div class="menu-scroll-container" id="menu-grid-container">
-      <!-- Dynamic Content Injection -->
+  <!-- ========== MENU SCREEN (Compact Text-Only) ========== -->
+  <div id="menu-screen" class="full-screen-view hidden">
+    <div class="menu-container">
+      <!-- North Indian -->
+      <section class="menu-section">
+        <h3>🍛 North Indian</h3>
+        <ul>
+          <li onclick="openAR('butter-chicken')">Butter Chicken <span>₹350</span></li>
+          <li onclick="openAR('paneer-tikka')">Paneer Tikka <span>₹280</span></li>
+          <li onclick="openAR('dal-makhani')">Dal Makhani <span>₹220</span></li>
+          <li onclick="openAR('garlic-naan')">Garlic Naan <span>₹60</span></li>
+          <li onclick="openAR('veg-biryani')">Veg Biryani <span>₹320</span></li>
+        </ul>
+      </section>
+
+      <!-- Chinese -->
+      <section class="menu-section">
+        <h3>🥡 Chinese</h3>
+        <ul>
+          <li onclick="openAR('hakka-noodles')">Hakka Noodles <span>₹240</span></li>
+          <li onclick="openAR('veg-manchurian')">Veg Manchurian <span>₹220</span></li>
+          <li onclick="openAR('chilli-chicken')">Chilli Chicken <span>₹290</span></li>
+          <li onclick="openAR('dim-sums')">Veg Dim Sums <span>₹180</span></li>
+          <li onclick="openAR('spring-rolls')">Spring Rolls <span>₹150</span></li>
+        </ul>
+      </section>
+
+      <!-- South Indian -->
+      <section class="menu-section">
+        <h3>🥘 South Indian</h3>
+        <ul>
+          <li onclick="openAR('masala-dosa')">Masala Dosa <span>₹180</span></li>
+          <li onclick="openAR('idli-sambhar')">Idli Sambhar <span>₹140</span></li>
+          <li onclick="openAR('medu-vada')">Medu Vada <span>₹140</span></li>
+          <li onclick="openAR('onion-uttapam')">Onion Uttapam <span>₹160</span></li>
+          <li onclick="openAR('lemon-rice')">Lemon Rice <span>₹160</span></li>
+        </ul>
+      </section>
+
+      <!-- Desserts -->
+      <section class="menu-section">
+        <h3>🍮 Desserts</h3>
+        <ul>
+          <li onclick="openAR('gulab-jamun')">Gulab Jamun <span>₹90</span></li>
+          <li onclick="openAR('rasmalai')">Rasmalai <span>₹110</span></li>
+          <li onclick="openAR('kulfi')">Kesar Kulfi <span>₹80</span></li>
+          <li onclick="openAR('brownie')">Choco Brownie <span>₹140</span></li>
+          <li onclick="openAR('ice-cream')">Premium Vanilla <span>₹70</span></li>
+        </ul>
+      </section>
     </div>
   </div>
 
-  <!-- 3D Pedestal Preview (Pre-AR) -->
-  <div id="preview-mode" class="portal-screen hidden preview-overlay">
-    <div id="pedestal-ui" class="preview-ui">
-      <button class="btn-close-preview" onclick="showSection('menu-screen')">✕</button>
-      <div class="dish-info-card">
-        <h2 id="preview-name">Dish Name</h2>
-        <p id="preview-price">$0.00</p>
-        <button class="btn-view-ar" onclick="enterARMode()">
-          <span class="icon">✨</span> View in your Reality
-        </button>
-      </div>
-    </div>
-    <!-- 3D Preview Canvas Area -->
-    <div id="pedestal-container"></div>
-  </div>
-
-  <!-- QR Modal -->
-  <div id="qr-modal" class="modal hidden">
-    <div class="modal-content">
-      <button class="close-modal" onclick="toggleQRModal()">✕</button>
-      <h3>Scan to Share</h3>
-      <div class="qr-placeholder">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://webar-dining.vercel.app"
-          alt="QR Code">
-      </div>
-      <p>Invite others to see the reality of our food</p>
-    </div>
-  </div>
-
-  <!-- Info, Feedback, and About sections remain with portal-screen class -->
-  <div id="hotel-info" class="portal-screen hidden content-center">
-    <div class="content-card">
-      <h2>Diamond Plaza</h2>
-      <p>Culinary transparency and pure craft.</p>
-      <div class="hotel-details">
+  <!-- ========== HOTEL INFO ========== -->
+  <div id="hotel-info" class="full-screen-view hidden content-page">
+    <div class="info-card">
+      <h2>Diamond Plaza Restaurant</h2>
+      <p>Culinary transparency and pure craft since 2020.</p>
+      <div class="details">
         <p>📍 5th Floor, Diamond Plaza</p>
         <p>🕒 11:00 AM - 11:00 PM</p>
+        <p>⭐ 4.9/5 Rating</p>
       </div>
     </div>
   </div>
 
-  <div id="feedback-section" class="portal-screen hidden content-center">
-    <div class="content-card">
+  <!-- ========== FEEDBACK FORM ========== -->
+  <div id="feedback-section" class="full-screen-view hidden content-page">
+    <div class="info-card">
       <h2>Guest Feedback</h2>
-      <form id="feedback-form" onsubmit="event.preventDefault(); submitFeedback();">
+      <form onsubmit="event.preventDefault(); submitFeedback();">
         <input type="text" placeholder="Your Name" required>
-        <textarea placeholder="Your review..." rows="4" required></textarea>
-        <button type="submit" class="btn-submit">Submit Review</button>
+        <textarea placeholder="Share your experience..." rows="4" required></textarea>
+        <button type="submit">Submit Feedback</button>
       </form>
     </div>
   </div>
 
-  <div id="about-us" class="portal-screen hidden content-center">
-    <div class="content-card">
-      <h2>Md Modassir Hussain</h2>
-      <p class="mission-statement">"We show you reality so you do not pay for fake food."</p>
-      <p>Bringing transparency to gourmet dining through WebAR.</p>
-      <div class="contact-box">
+  <!-- ========== ABOUT US ========== -->
+  <div id="about-us" class="full-screen-view hidden content-page">
+    <div class="info-card">
+      <h2>About Us</h2>
+      <p class="mission">"We show you reality so you do not pay for fake food."</p>
+      <p>Developed by: <strong>Md Modassir Hussain</strong></p>
+      <div class="contact">
+        <h4>Contact Us</h4>
         <p>📧 support@webar-restaurant.com</p>
+        <p>📞 +91 98765 43210</p>
       </div>
     </div>
   </div>
 
-  <!-- AR Experience UI (Floating Over AR) -->
-  <div id="ar-ui" class="hidden">
-    <!-- Instruction Toast -->
-    <div id="placement-instruction" class="instruction-toast">
-      <div class="spinner"></div>
-      <p>Point at floor/table and tap to place dish</p>
-    </div>
-
-    <div class="side-ui side-ui-left">
-      <div class="nutritional-arrow arrow-up">
-        <span class="arrow-icon">▲</span>
-        <span class="arrow-label">Protein</span>
-        <span id="protein-value" class="arrow-value"></span>
+  <!-- ========== AR VIEW (3D Model + Specs + Order) ========== -->
+  <div id="ar-view" class="full-screen-view hidden">
+    <!-- AR Overlay UI -->
+    <div class="ar-overlay">
+      <!-- Dish Name -->
+      <div class="ar-header">
+        <button class="btn-back-ar" onclick="closeAR()">← Back</button>
+        <h3 id="ar-dish-name">Dish Name</h3>
       </div>
-      <div class="nutritional-arrow arrow-down">
-        <span id="carbs-value" class="arrow-value"></span>
-        <span class="arrow-label">Carbs</span>
-        <span class="arrow-icon">▼</span>
-      </div>
-    </div>
 
-    <div class="side-ui side-ui-right">
-      <div class="ingredients-list">
+      <!-- Nutritional Info -->
+      <div class="ar-specs">
+        <div class="spec-item"><span class="label">Protein</span><span id="ar-protein" class="value">--</span></div>
+        <div class="spec-item"><span class="label">Carbs</span><span id="ar-carbs" class="value">--</span></div>
+        <div class="spec-item"><span class="label">Fiber</span><span id="ar-fiber" class="value">--</span></div>
+      </div>
+
+      <!-- Ingredients -->
+      <div class="ar-ingredients">
         <h4>Ingredients</h4>
-        <ul id="ingredients-container"></ul>
+        <ul id="ar-ingredients-list"></ul>
       </div>
-    </div>
 
-    <div class="premium-order-panel mobile-bottom-bar">
-      <button class="btn-back" onclick="showSection('menu-screen')">Back to Menu</button>
-      <button class="btn-order-now" onclick="placeOrder()">Order Now</button>
+      <!-- Order Panel -->
+      <div class="ar-order-panel">
+        <div class="quantity-control">
+          <button onclick="changeQty(-1)">−</button>
+          <span id="plate-qty">1</span>
+          <button onclick="changeQty(1)">+</button>
+        </div>
+        <button class="btn-order" onclick="placeOrder()">🛒 Add to Order</button>
+      </div>
     </div>
   </div>
 
-  <!-- AR Scene -->
+  <!-- ========== A-FRAME AR SCENE ========== -->
   <a-scene id="ar-scene" arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;"
     vr-mode-ui="enabled: false" renderer="logarithmicDepthBuffer: true; colorManagement: true;"
-    loading-screen="enabled: false" style="opacity: 0; transition: opacity 1s;" cursor="rayOrigin: mouse"
-    raycaster="objects: .collidable">
+    loading-screen="enabled: false">
 
     <a-light type="ambient" intensity="1.2"></a-light>
     <a-light type="directional" intensity="0.8" position="1 1 1"></a-light>
 
-    <!-- Placement Reticle (Invisible until surface found) -->
-    <a-entity id="reticle" rotation="-90 0 0" visible="false">
-      <a-ring color="#c5a87e" radius-inner="0.08" radius-outer="0.1" material="shader: flat; opacity: 0.8"></a-ring>
-      <a-circle color="#c5a87e" radius="0.02" material="shader: flat; opacity: 1"></a-circle>
-    </a-entity>
-
-    <a-entity id="model-container" position="0 0 0" visible="false">
-      <a-gltf-model id="ar-model" rotation="0 0 0" shadow="cast: true"></a-gltf-model>
+    <a-entity id="model-container" position="0 -0.5 -1.5">
+      <a-gltf-model id="ar-model" rotation="0 0 0"
+        animation="property: rotation; to: 0 360 0; loop: true; dur: 15000; easing: linear">
+      </a-gltf-model>
     </a-entity>
 
     <a-entity camera></a-entity>
