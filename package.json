@@ -1,54 +1,29 @@
 {
-  "name": "webar-platform",
-  "version": "1.0.0",
-  "description": "Production-ready WebAR platform using A-Frame, WebXR, and Three.js. Launch instantly via QR code with no app installation.",
-  "main": "public/app.js",
-  "scripts": {
-    "start": "http-server public -p 8080 --ssl --cert cert.pem --key key.pem",
-    "dev": "http-server public -p 8080 -c-1",
-    "test": "echo 'Tests coming soon'",
-    "deploy:vercel": "vercel --prod",
-    "deploy:netlify": "netlify deploy --prod --dir=."
-  },
-  "keywords": [
-    "webxr",
-    "augmented-reality",
-    "ar",
-    "aframe",
-    "threejs",
-    "webgl",
-    "mobile-ar",
-    "browser-ar",
-    "qr-code",
-    "3d-models",
-    "glb",
-    "gltf",
-    "usdz"
-  ],
-  "author": "Your Name",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/your-username/webar-platform.git"
-  },
-  "bugs": {
-    "url": "https://github.com/your-username/webar-platform/issues"
-  },
-  "homepage": "https://github.com/your-username/webar-platform#readme",
-  "devDependencies": {
-    "http-server": "^14.1.1"
-  },
-  "engines": {
-    "node": ">=14.0.0"
-  },
-  "browserslist": [
-    "iOS >= 13",
-    "Android >= 7",
-    "Chrome >= 79",
-    "Safari >= 13",
-    "Firefox >= 85"
-  ],
-  "dependencies": {
-    "mongoose": "^9.1.6"
-  }
+    "name": "webar-menu",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc -b && vite build",
+        "preview": "vite preview --https",
+        "lint": "eslint ."
+    },
+    "dependencies": {
+        "@google/model-viewer": "^3.4.0",
+        "@types/three": "^0.182.0",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-router-dom": "^6.22.0",
+        "three": "^0.182.0"
+    },
+    "devDependencies": {
+        "@types/node": "^25.2.1",
+        "@types/react": "^18.3.0",
+        "@types/react-dom": "^18.3.0",
+        "@vitejs/plugin-basic-ssl": "^1.1.0",
+        "@vitejs/plugin-react": "^4.3.0",
+        "typescript": "^5.5.0",
+        "vite": "^5.4.0"
+    }
 }

@@ -1,0 +1,74 @@
+.aboutPage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: calc(env(safe-area-inset-top) + 4.5rem);
+}
+
+.card {
+    max-width: 400px;
+    text-align: center;
+    animation: scaleIn 0.4s ease;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.tagline {
+    font-style: italic;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+
+.content p {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.developer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+}
+
+.label {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.contact {
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    text-align: left;
+}
+
+.contact h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.contact p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
