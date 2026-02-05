@@ -25,9 +25,26 @@
 </head>
 
 <body>
-  <!-- ========== PERSISTENT NAVBAR (Top-Left) ========== -->
-  <nav id="app-navbar">
-    <button class="nav-home-btn" onclick="showHomeScreen()">
+  <!-- ========== CAMERA SCANNER (FULL SCREEN - FIRST VIEW) ========== -->
+  <div id="camera-scanner" class="camera-view">
+    <video id="scanner-video" autoplay playsinline></video>
+    <div class="scanner-overlay">
+      <div class="scan-frame">
+        <div class="scan-line"></div>
+      </div>
+      <h2>Scan Hotel Menu QR Code</h2>
+      <p>Point camera at the table QR code</p>
+      <button class="btn-demo-scan" onclick="simulateQRScan()">[ Demo: Simulate Scan ]</button>
+    </div>
+    <div class="scanner-branding">
+      <p><strong>Md Modassir Hussain</strong></p>
+      <p class="tagline">"We show you reality so you do not pay for fake food."</p>
+    </div>
+  </div>
+
+  <!-- ========== PERSISTENT NAVBAR (Hidden until QR scanned) ========== -->
+  <nav id="app-navbar" class="hidden">
+    <button class="nav-home-btn" onclick="showScanner()">
       <span>🏠</span> Home
     </button>
     <div class="nav-links-row">
@@ -38,22 +55,8 @@
     </div>
   </nav>
 
-  <!-- ========== SCANNER VIEW (Camera First) ========== -->
-  <div id="home-scanner" class="full-screen-view">
-    <div class="scanner-overlay">
-      <div class="scan-frame"></div>
-      <h2>Scan Hotel Menu QR</h2>
-      <p>Point your camera at the table QR code</p>
-      <button class="btn-scan-demo" onclick="simulateScan()">[ Demo: Tap to Scan ]</button>
-    </div>
-    <div class="scanner-branding">
-      <p><strong>Md Modassir Hussain</strong></p>
-      <p class="tagline">"We show you reality so you do not pay for fake food."</p>
-    </div>
-  </div>
-
   <!-- ========== MENU SCREEN (Compact Text-Only) ========== -->
-  <div id="menu-screen" class="full-screen-view hidden">
+  <div id="menu-screen" class="app-screen hidden">
     <div class="menu-container">
       <!-- North Indian -->
       <section class="menu-section">
@@ -106,7 +109,7 @@
   </div>
 
   <!-- ========== HOTEL INFO ========== -->
-  <div id="hotel-info" class="full-screen-view hidden content-page">
+  <div id="hotel-info" class="app-screen hidden content-page">
     <div class="info-card">
       <h2>Diamond Plaza Restaurant</h2>
       <p>Culinary transparency and pure craft since 2020.</p>
@@ -119,7 +122,7 @@
   </div>
 
   <!-- ========== FEEDBACK FORM ========== -->
-  <div id="feedback-section" class="full-screen-view hidden content-page">
+  <div id="feedback-section" class="app-screen hidden content-page">
     <div class="info-card">
       <h2>Guest Feedback</h2>
       <form onsubmit="event.preventDefault(); submitFeedback();">
@@ -131,7 +134,7 @@
   </div>
 
   <!-- ========== ABOUT US ========== -->
-  <div id="about-us" class="full-screen-view hidden content-page">
+  <div id="about-us" class="app-screen hidden content-page">
     <div class="info-card">
       <h2>About Us</h2>
       <p class="mission">"We show you reality so you do not pay for fake food."</p>
@@ -145,7 +148,7 @@
   </div>
 
   <!-- ========== AR VIEW (3D Model + Specs + Order) ========== -->
-  <div id="ar-view" class="full-screen-view hidden">
+  <div id="ar-view" class="camera-view hidden">
     <!-- AR Overlay UI -->
     <div class="ar-overlay">
       <!-- Dish Name -->
@@ -183,7 +186,7 @@
   <a-scene id="ar-scene"
     arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best; sourceParameters: { facingMode: 'environment' };"
     vr-mode-ui="enabled: false" renderer="logarithmicDepthBuffer: true; colorManagement: true;"
-    loading-screen="enabled: false">
+    loading-screen="enabled: false" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;">
 
     <a-light type="ambient" intensity="1.2"></a-light>
     <a-light type="directional" intensity="0.8" position="1 1 1"></a-light>
