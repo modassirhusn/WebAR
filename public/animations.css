@@ -1,0 +1,256 @@
+/* ========== MENU ITEM ANIMATIONS ========== */
+.food-card {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+}
+
+.food-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.food-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.food-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.food-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.food-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.food-card:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.food-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(196, 255, 13, 0.4);
+    border-color: var(--emerald-green);
+}
+
+/* ========== BUTTON CLICK ANIMATIONS ========== */
+button {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(196, 255, 13, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.btn-ar:hover,
+.btn-order:hover {
+    box-shadow: 0 0 25px rgba(196, 255, 13, 0.6);
+    transform: scale(1.05);
+}
+
+/* ========== TYPEWRITER ANIMATION FOR FOOD INFO ========== */
+.typewriter {
+    overflow: hidden;
+    border-right: 2px solid var(--emerald-green);
+    white-space: nowrap;
+    animation: typing 2s steps(40) forwards, blink 0.75s step-end infinite;
+    display: inline-block;
+    max-width: 100%;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
+.typewriter-complete {
+    border-right: none;
+    animation: none;
+}
+
+/* Stagger typewriter for multiple elements */
+.spec-item .value {
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.spec-item:nth-child(1) .value {
+    animation-delay: 0.3s;
+}
+
+.spec-item:nth-child(2) .value {
+    animation-delay: 0.6s;
+}
+
+.spec-item:nth-child(3) .value {
+    animation-delay: 0.9s;
+}
+
+.ingredients-list li {
+    opacity: 0;
+    animation: slideInLeft 0.5s ease forwards;
+}
+
+.ingredients-list li:nth-child(1) {
+    animation-delay: 1.2s;
+}
+
+.ingredients-list li:nth-child(2) {
+    animation-delay: 1.4s;
+}
+
+.ingredients-list li:nth-child(3) {
+    animation-delay: 1.6s;
+}
+
+.ingredients-list li:nth-child(4) {
+    animation-delay: 1.8s;
+}
+
+.ingredients-list li:nth-child(5) {
+    animation-delay: 2.0s;
+}
+
+.ingredients-list li:nth-child(6) {
+    animation-delay: 2.2s;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ========== DISH DETAIL ANIMATIONS ========== */
+.dish-detail-card {
+    animation: scaleIn 0.5s ease forwards;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.dish-image {
+    transition: transform 0.5s ease;
+}
+
+.dish-image:hover {
+    transform: scale(1.05);
+}
+
+/* ========== AR VIEW ANIMATIONS ========== */
+.ar-overlay {
+    animation: fadeIn 0.5s ease;
+}
+
+.ar-specs {
+    animation: slideInLeft 0.6s ease;
+    animation-delay: 0.3s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+/* ========== HAMBURGER MENU ANIMATIONS ========== */
+.hamburger-menu:active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger-menu:active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu:active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* ========== LOADING ANIMATIONS ========== */
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ========== GLOW EFFECT ========== */
+@keyframes glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(196, 255, 13, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(196, 255, 13, 0.6);
+    }
+}
+
+.glow-effect {
+    animation: glow 2s ease-in-out infinite;
+}

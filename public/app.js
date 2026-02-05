@@ -175,6 +175,11 @@ function showDishDetail(foodId) {
     // Show detail page
     hideAllScreens();
     document.getElementById('dish-detail').classList.remove('hidden');
+
+    // Trigger animations
+    if (window.animateFoodInfo) {
+        setTimeout(() => window.animateFoodInfo(), 100);
+    }
 }
 
 // ========== AR VIEW WITH WORKING CAMERA ==========
@@ -214,6 +219,11 @@ async function openARView() {
 
     // Start camera and show 3D model
     await startARCameraAndModel();
+
+    // Trigger AR animations
+    if (window.animateARInfo) {
+        setTimeout(() => window.animateARInfo(), 500);
+    }
 }
 
 async function startARCameraAndModel() {
