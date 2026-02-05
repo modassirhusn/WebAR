@@ -4,24 +4,15 @@
  */
 
 :root {
-  --primary-blue: #5B7C99;
-  /* Matte metal blue */
-  --accent-blue: #7A9AB8;
-  /* Lighter blue */
-  --dark-blue: #3D5A73;
-  /* Darker blue */
-  --bg-light: #E8ECEF;
-  /* Whitish grey */
-  --bg-card: #F5F7F9;
-  /* Light card background */
-  --bg-dark: #2C3E50;
-  /* Dark grey for contrast */
-  --glass-border: rgba(91, 124, 153, 0.2);
-  --text-primary: #2C3E50;
-  /* Dark grey text */
-  --text-secondary: #5B7C99;
-  /* Blue text */
-  --text-light: #ffffff;
+  --emerald-green: #C4FF0D;
+  --emerald-dark: #9FCC0A;
+  --charcoal: #0F1419;
+  --charcoal-light: #1A1F26;
+  --charcoal-lighter: #252B33;
+  --text-primary: #E8E8E8;
+  --text-secondary: #9CA3AF;
+  --glass-border: rgba(196, 255, 13, 0.15);
+  --shadow-emerald: 0 0 20px rgba(196, 255, 13, 0.3);
 }
 
 * {
@@ -828,3 +819,4 @@ body {
 .a-enter-ar {
   display: none !important;
 }
+
