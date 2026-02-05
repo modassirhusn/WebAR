@@ -43,7 +43,7 @@
   <!-- ========== PERSISTENT NAVBAR (Hidden until QR scanned) ========== -->
   <nav id="app-navbar" class="hidden">
     <button class="nav-home-btn" onclick="showScanner()">
-      <span>🏠</span> Home
+      <span></span> Home
     </button>
     <div class="nav-links-row">
       <button onclick="showSection('menu-screen')">Menu</button>
@@ -58,7 +58,7 @@
     <div class="menu-container">
       <!-- North Indian -->
       <section class="menu-section">
-        <h3>🍛 North Indian</h3>
+        <h3> North Indian</h3>
         <ul>
           <li onclick="showDishDetail('butter-chicken')">Butter Chicken <span>₹350</span></li>
           <li onclick="showDishDetail('paneer-tikka')">Paneer Tikka <span>₹280</span></li>
@@ -70,7 +70,7 @@
 
       <!-- Chinese -->
       <section class="menu-section">
-        <h3>🥡 Chinese</h3>
+        <h3> Chinese</h3>
         <ul>
           <li onclick="showDishDetail('hakka-noodles')">Hakka Noodles <span>₹240</span></li>
           <li onclick="showDishDetail('veg-manchurian')">Veg Manchurian <span>₹220</span></li>
@@ -82,7 +82,7 @@
 
       <!-- South Indian -->
       <section class="menu-section">
-        <h3>🥘 South Indian</h3>
+        <h3> South Indian</h3>
         <ul>
           <li onclick="showDishDetail('masala-dosa')">Masala Dosa <span>₹180</span></li>
           <li onclick="showDishDetail('idli-sambhar')">Idli Sambhar <span>₹140</span></li>
@@ -94,7 +94,7 @@
 
       <!-- Desserts -->
       <section class="menu-section">
-        <h3>🍮 Desserts</h3>
+        <h3> Desserts</h3>
         <ul>
           <li onclick="showDishDetail('gulab-jamun')">Gulab Jamun <span>₹90</span></li>
           <li onclick="showDishDetail('rasmalai')">Rasmalai <span>₹110</span></li>
@@ -112,9 +112,9 @@
       <h2>Diamond Plaza Restaurant</h2>
       <p>Culinary transparency and pure craft since 2020.</p>
       <div class="details">
-        <p>📍 5th Floor, Diamond Plaza</p>
-        <p>🕒 11:00 AM - 11:00 PM</p>
-        <p>⭐ 4.9/5 Rating</p>
+        <p> 5th Floor, Diamond Plaza</p>
+        <p> 11:00 AM - 11:00 PM</p>
+        <p> 4.9/5 Rating</p>
       </div>
     </div>
   </div>
@@ -151,17 +151,17 @@
       </form>
 
       <div class="contact-details">
-        <h4>📍 Visit Us</h4>
+        <h4> Visit Us</h4>
         <p>Diamond Plaza Restaurant</p>
         <p>5th Floor, Diamond Plaza</p>
         <p>MG Road, Bangalore - 560001</p>
         <p>Karnataka, India</p>
 
-        <h4>📞 Reach Us</h4>
+        <h4> Reach Us</h4>
         <p>Phone: +91 98765 43210</p>
         <p>Email: contact@diamondplaza.com</p>
 
-        <h4>⏰ Hours</h4>
+        <h4> Hours</h4>
         <p>Mon - Sun: 11:00 AM - 11:00 PM</p>
       </div>
 
@@ -179,8 +179,8 @@
       <p>Developed by: <strong>Md Modassir Hussain</strong></p>
       <div class="contact">
         <h4>Contact Us</h4>
-        <p>📧 contact@diamondplaza.com</p>
-        <p>📞 +91 98765 43210</p>
+        <p> contact@diamondplaza.com</p>
+        <p> +91 98765 43210</p>
       </div>
     </div>
   </div>
@@ -262,7 +262,7 @@
 
   <!-- ========== AR LOADING SCREEN ========== -->
   <div id="ar-loading" class="hidden"
-    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9000; background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center; flex-direction: column;">
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 6000; background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center; flex-direction: column;">
     <div
       style="width: 50px; height: 50px; border: 4px solid rgba(197,168,126,0.3); border-top-color: #c5a87e; border-radius: 50%; animation: spin 1s linear infinite;">
     </div>
@@ -271,14 +271,14 @@
 
   <!-- ========== SIMPLE AR VIEW (Camera + 3D Model) ========== -->
   <div id="ar-camera-container"
-    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 7000; background: #000;">
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 5000; background: #000;">
     <!-- Camera Video Feed -->
     <video id="ar-camera-video" autoplay playsinline
       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"></video>
 
     <!-- 3D Model Overlay -->
     <model-viewer id="ar-3d-model"
-      style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: 60%; z-index: 7001;"
+      style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: 60%; z-index: 5001;"
       camera-controls shadow-intensity="1" exposure="1" camera-orbit="0deg 75deg 2m" min-camera-orbit="auto auto 1m"
       max-camera-orbit="auto auto 10m">
     </model-viewer>
