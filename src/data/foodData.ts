@@ -317,3 +317,6 @@ export function getFoodById(id: string): FoodItem | undefined {
 export function getFoodsByCategory(category: string): FoodItem[] {
     return FOOD_DATA.filter((food) => food.category === category);
 }
+
+// Alias for convenience
+export const FOODS = FOOD_DATA;

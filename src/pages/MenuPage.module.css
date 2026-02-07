@@ -129,3 +129,104 @@
 .item:nth-child(5) {
     animation-delay: 0.2s;
 }
+
+/* Search Toggle Button - fixed position, left of theme toggle */
+.searchToggle {
+    position: fixed;
+    top: calc(env(safe-area-inset-top) + 0.75rem);
+    right: 4rem;
+    z-index: 1000;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all var(--transition);
+    color: var(--text-primary);
+}
+
+.searchToggle:hover {
+    transform: scale(1.05);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-colored);
+}
+
+/* Search Form */
+.searchForm {
+    margin-bottom: 1.5rem;
+}
+
+.searchInputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.searchInputIcon {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-tertiary);
+    pointer-events: none;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 0.875rem 2.75rem;
+    font-size: 1rem;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    color: var(--text-primary);
+    transition: all var(--transition);
+}
+
+.searchInput::placeholder {
+    color: var(--text-tertiary);
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: var(--shadow-colored);
+}
+
+.clearBtn {
+    position: absolute;
+    right: 0.75rem;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-tertiary);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all var(--transition);
+    color: var(--text-secondary);
+}
+
+.clearBtn:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* Search Results */
+.searchResults {
+    margin-bottom: 2rem;
+}
+
+.noResults {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 2rem;
+    font-style: italic;
+}

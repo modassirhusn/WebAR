@@ -15,7 +15,7 @@ import AboutPage from './pages/AboutPage';
 // Components
 import Navigation from './components/Navigation';
 import ThemeToggle from './components/ThemeToggle';
-import LoadingScreen from './components/LoadingScreen';
+import LoadingScreen, { PageTransition } from './components/LoadingScreen';
 
 export default function App() {
     const { isDark } = useTheme();
@@ -38,19 +38,22 @@ export default function App() {
             <ThemeToggle />
             <Navigation />
 
-            <Routes>
-                {/* New Landing Page as home */}
-                <Route path="/" element={<LandingPage />} />
-                {/* Scanner moved to /scan */}
-                <Route path="/scan" element={<ScannerPage />} />
-                <Route path="/menu" element={<MenuPage />} />
-                <Route path="/dish/:id" element={<DishPage />} />
-                <Route path="/ar/:id" element={<ARPage />} />
-                <Route path="/hotel" element={<HotelPage />} />
-                <Route path="/feedback" element={<FeedbackPage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
+            {/* PageTransition wraps Routes to show loading on page changes */}
+            <PageTransition duration={600}>
+                <Routes>
+                    {/* New Landing Page as home */}
+                    <Route path="/" element={<LandingPage />} />
+                    {/* Scanner moved to /scan */}
+                    <Route path="/scan" element={<ScannerPage />} />
+                    <Route path="/menu" element={<MenuPage />} />
+                    <Route path="/dish/:id" element={<DishPage />} />
+                    <Route path="/ar/:id" element={<ARPage />} />
+                    <Route path="/hotel" element={<HotelPage />} />
+                    <Route path="/feedback" element={<FeedbackPage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+            </PageTransition>
         </div>
     );
 }

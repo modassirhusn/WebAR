@@ -17,7 +17,7 @@ export default function HotelPage() {
                     </div>
 
                     <div className={styles.detailItem}>
-                        <span className={styles.icon}>🕐</span>
+                        <span className={styles.icon}></span>
                         <div>
                             <span className={styles.label}>Hours</span>
                             <span className={styles.value}>11:00 AM - 11:00 PM</span>
@@ -25,7 +25,7 @@ export default function HotelPage() {
                     </div>
 
                     <div className={styles.detailItem}>
-                        <span className={styles.icon}>⭐</span>
+                        <span className={styles.icon}></span>
                         <div>
                             <span className={styles.label}>Rating</span>
                             <span className={styles.value}>4.9 / 5</span>

@@ -1,11 +1,14 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { getFoodById } from '../data/foodData';
+import { useCart } from '../contexts/CartContext';
+import CartCounter from '../components/CartCounter';
 import styles from './DishPage.module.css';
 
 export default function DishPage() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const food = getFoodById(id || '');
+    const { getItemQuantity, addItem, removeItem } = useCart();
 
     if (!food) {
         return (
@@ -14,6 +17,8 @@ export default function DishPage() {
             </div>
         );
     }
+
+    const quantity = getItemQuantity(food.id);
 
     return (
         <div className={`page ${styles.dishPage}`}>
@@ -61,15 +66,26 @@ export default function DishPage() {
                     </ul>
                 </div>
 
-                <button
-                    className={`btn btn-primary ${styles.arBtn}`}
-                    onClick={() => navigate(`/ar/${food.id}`)}
-                >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                    </svg>
-                    View in AR
-                </button>
+                {/* Action buttons row */}
+                <div className={styles.actionRow}>
+                    {/* 3D Neumorphic Cart Counter */}
+                    <CartCounter
+                        quantity={quantity}
+                        onAdd={() => addItem(food)}
+                        onRemove={() => removeItem(food.id)}
+                    />
+
+                    {/* View in AR button */}
+                    <button
+                        className={`btn btn-primary ${styles.arBtn}`}
+                        onClick={() => navigate(`/ar/${food.id}`)}
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                        </svg>
+                        View in AR
+                    </button>
+                </div>
             </div>
         </div>
     );

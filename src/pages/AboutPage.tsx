@@ -21,8 +21,8 @@ export default function AboutPage() {
 
                     <div className={styles.contact}>
                         <h3>Get in Touch</h3>
-                        <p>📧 contact@diamondplaza.com</p>
-                        <p>📞 +91 98765 43210</p>
+                        <p> contact@diamondplaza.com</p>
+                        <p> +91 98765 43210</p>
                     </div>
                 </div>
             </div>
