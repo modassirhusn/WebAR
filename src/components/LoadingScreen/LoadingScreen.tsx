@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import styles from './LoadingScreen.module.css';
 
-// User's food images
+// User's food images with removed backgrounds
 const FOOD_IMAGES = [
-    '/images/loading/Gemini_Generated_Image_90yt9d90yt9d90yt.png',  // Egg
-    '/images/loading/Gemini_Generated_Image_i5nanyi5nanyi5na.png',  // Burger
-    '/images/loading/Gemini_Generated_Image_id1pqgid1pqgid1p.png',  // Cola
+    '/images/loading/Gemini_Generated_Image_i5nanyi5nanyi5na-removebg-preview.png',  // Egg
+    '/images/loading/burger-removebg-preview.png',  // Burger
+    '/images/loading/Gemini_Generated_Image_id1pqgid1pqgid1p-removebg-preview.png',  // Cola
 ];
 
 interface LoadingScreenProps {
@@ -40,16 +40,15 @@ export default function LoadingScreen({ onComplete, minDuration = 2500 }: Loadin
                 <div className={styles.orb3} />
             </div>
 
-            {/* Main content */}
+            {/* Main content - just the floating food icons, no text */}
             <div className={styles.content}>
-                {/* 3D Floating food icons */}
                 <div className={styles.foodContainer}>
                     {FOOD_IMAGES.map((img, index) => (
                         <div
                             key={index}
                             className={styles.foodItem}
                             style={{
-                                animationDelay: `${index * 0.2}s`,
+                                animationDelay: `${index * 0.25}s`,
                             }}
                         >
                             <img
@@ -57,22 +56,9 @@ export default function LoadingScreen({ onComplete, minDuration = 2500 }: Loadin
                                 alt={`Food ${index + 1}`}
                                 className={styles.foodImage}
                             />
-                            {/* Shadow under each item */}
                             <div className={styles.shadow} />
                         </div>
                     ))}
-                </div>
-
-                {/* Loading text */}
-                <div className={styles.loadingText}>
-                    <span>L</span>
-                    <span>o</span>
-                    <span>a</span>
-                    <span>d</span>
-                    <span>i</span>
-                    <span>n</span>
-                    <span>g</span>
-                    <span className={styles.dots}>...</span>
                 </div>
             </div>
         </div>
