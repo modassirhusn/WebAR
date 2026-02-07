@@ -5,6 +5,7 @@ import styles from './Navigation.module.css';
 
 const NAV_ITEMS = [
     { path: '/', label: 'Home', icon: '🏠' },
+    { path: '/scan', label: 'Scan', icon: '📱' },
     { path: '/menu', label: 'Menu', icon: '🍽️' },
     { path: '/hotel', label: 'Hotel', icon: '🏨' },
     { path: '/feedback', label: 'Contact', icon: '💬' },
@@ -22,8 +23,8 @@ export default function Navigation() {
         setIsOpen(false);
     };
 
-    // Hide navigation on scanner (home) and AR pages
-    if (location.pathname === '/' || location.pathname.startsWith('/ar')) {
+    // Hide navigation on landing page, scan page, and AR pages
+    if (location.pathname === '/' || location.pathname === '/scan' || location.pathname.startsWith('/ar')) {
         return null;
     }
 

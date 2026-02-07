@@ -1,47 +1,78 @@
+/* ===============================================
+   🍛 DISH PAGE - Premium Styling
+   =============================================== */
+
 .dishPage {
-    padding-top: calc(env(safe-area-inset-top) + 1rem);
-    padding-bottom: calc(env(safe-area-inset-bottom) + 6rem);
+    padding-top: calc(env(safe-area-inset-top) + 1.25rem);
+    padding-bottom: calc(env(safe-area-inset-bottom) + 7rem);
 }
 
 .backBtn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: none;
-    border: none;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    padding: 0.625rem 1rem;
     color: var(--accent);
-    font-size: 0.9375rem;
-    font-weight: 500;
+    font-size: 0.9rem;
+    font-weight: 600;
     cursor: pointer;
-    padding: 0.5rem 0;
-    margin-bottom: 1rem;
-    transition: opacity 0.2s ease;
+    transition: all var(--transition);
+    margin-bottom: 1.25rem;
 }
 
 .backBtn:hover {
-    opacity: 0.7;
+    background: var(--accent-subtle);
+    border-color: var(--accent);
+    transform: translateX(-4px);
 }
 
 .imageWrapper {
     position: relative;
-    border-radius: 24px;
+    border-radius: var(--radius-xl);
     overflow: hidden;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Gradient overlay on image */
+.imageWrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+    pointer-events: none;
 }
 
 .image {
     width: 100%;
-    height: 240px;
+    height: 280px;
     object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.imageWrapper:hover .image {
+    transform: scale(1.05);
 }
 
 .vegBadge {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    background: var(--bg-elevated);
-    padding: 4px;
-    border-radius: 4px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    z-index: 1;
 }
 
 .header {
@@ -49,49 +80,68 @@
     align-items: flex-start;
     justify-content: space-between;
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
 }
 
 .name {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.75rem;
+    font-weight: 800;
     color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
 }
 
 .price {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--accent);
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     flex-shrink: 0;
 }
 
 .nutrition {
     display: flex;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    gap: 0.875rem;
+    margin-bottom: 2rem;
 }
 
 .nutrientCard {
     flex: 1;
-    background: var(--bg-secondary);
-    border-radius: 12px;
-    padding: 1rem;
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1rem;
     text-align: center;
+    transition: all var(--transition);
+}
+
+.nutrientCard:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-colored);
 }
 
 .nutrientValue {
     display: block;
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--text-primary);
+    font-size: 1.375rem;
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 0.25rem;
 }
 
 .nutrientLabel {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-tertiary);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
+    font-weight: 600;
 }
 
 .section {
@@ -99,33 +149,83 @@
 }
 
 .sectionTitle {
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 700;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.75rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sectionTitle::before {
+    content: '';
+    width: 3px;
+    height: 1rem;
+    background: var(--gradient-primary);
+    border-radius: 2px;
 }
 
 .ingredients {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.625rem;
     list-style: none;
 }
 
 .ingredient {
-    background: var(--bg-secondary);
-    padding: 0.5rem 1rem;
-    border-radius: 9999px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-full);
     font-size: 0.875rem;
+    font-weight: 500;
     color: var(--text-primary);
+    transition: all var(--transition);
+}
+
+.ingredient:hover {
+    border-color: var(--accent);
+    background: var(--accent-subtle);
+    transform: translateY(-2px);
 }
 
 .arBtn {
     position: fixed;
-    bottom: calc(env(safe-area-inset-bottom) + 1.5rem);
-    left: 1rem;
-    right: 1rem;
-    width: calc(100% - 2rem);
+    bottom: calc(env(safe-area-inset-bottom) + 1.75rem);
+    left: 1.25rem;
+    right: 1.25rem;
+    width: calc(100% - 2.5rem);
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    background: var(--gradient-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: var(--shadow-colored), 0 4px 16px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.arBtn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-glow), 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.arBtn:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+/* AR Button icon animation */
+.arBtn svg {
+    animation: float 3s ease-in-out infinite;
 }

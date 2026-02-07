@@ -1,0 +1,235 @@
+/* ===============================================
+   🏠 LANDING PAGE - With Animated Loader
+   =============================================== */
+
+.landingPage {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-primary);
+}
+
+/* Animated background effects */
+.bgEffects {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.gradientOrb1,
+.gradientOrb2,
+.gradientOrb3 {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    animation: orbDrift 15s ease-in-out infinite;
+}
+
+.gradientOrb1 {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    top: -150px;
+    left: -100px;
+    opacity: 0.4;
+    animation-delay: 0s;
+}
+
+.gradientOrb2 {
+    width: 350px;
+    height: 350px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    bottom: -100px;
+    right: -100px;
+    opacity: 0.35;
+    animation-delay: 5s;
+}
+
+.gradientOrb3 {
+    width: 280px;
+    height: 280px;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    top: 40%;
+    right: 20%;
+    opacity: 0.3;
+    animation-delay: 10s;
+}
+
+@keyframes orbDrift {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(40px, -40px) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-30px, 30px) scale(0.95);
+    }
+}
+
+/* Content container */
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 400px;
+    z-index: 1;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loader wrapper - at top/middle */
+.loaderWrapper {
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Text content - above Get Started */
+.textContent {
+    margin-bottom: 2rem;
+}
+
+.brandName {
+    font-size: 2.25rem;
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+}
+
+.tagline {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 1rem;
+}
+
+.highlight {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* CTA Button */
+.ctaButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 260px;
+    padding: 1rem 1.75rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: var(--gradient-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: var(--shadow-colored), 0 4px 16px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.ctaButton::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity var(--transition);
+}
+
+.ctaButton:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-glow), 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.ctaButton:hover::before {
+    opacity: 1;
+}
+
+.ctaButton:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+.ctaButton svg {
+    transition: transform var(--transition);
+}
+
+.ctaButton:hover svg {
+    transform: translateX(4px);
+}
+
+/* Footer */
+.footer {
+    margin-top: 2.5rem;
+}
+
+.footer p {
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .gradientOrb1 {
+    opacity: 0.25;
+}
+
+[data-theme="dark"] .gradientOrb2 {
+    opacity: 0.2;
+}
+
+[data-theme="dark"] .gradientOrb3 {
+    opacity: 0.2;
+}
+
+/* Responsive */
+@media (min-width: 480px) {
+    .brandName {
+        font-size: 2.75rem;
+    }
+
+    .tagline {
+        font-size: 1.75rem;
+    }
+}

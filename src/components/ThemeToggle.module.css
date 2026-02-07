@@ -1,14 +1,18 @@
+/* ===============================================
+   🌙 THEME TOGGLE - Premium Styling
+   =============================================== */
+
 .toggle {
     position: fixed;
     top: calc(env(safe-area-inset-top) + 1rem);
     right: 1rem;
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     border: none;
     border-radius: var(--radius-full);
-    background: var(--bg-elevated);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: var(--bg-glass);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--border);
     cursor: pointer;
     z-index: 100;
@@ -16,12 +20,27 @@
     align-items: center;
     justify-content: center;
     transition: all var(--transition);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+.toggle::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-warm);
+    opacity: 0;
+    transition: opacity var(--transition);
 }
 
 .toggle:hover {
-    background: var(--bg-tertiary);
-    transform: scale(1.05);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-colored);
+    transform: scale(1.1) rotate(15deg);
+}
+
+.toggle:hover::before {
+    opacity: 0.1;
 }
 
 .toggle:active {
@@ -33,4 +52,22 @@
     align-items: center;
     justify-content: center;
     color: var(--text-primary);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-size: 1.25rem;
+    position: relative;
+    z-index: 1;
+}
+
+.toggle:hover .icon {
+    transform: scale(1.1);
+}
+
+/* Sun animation for light mode */
+[data-theme="light"] .toggle .icon {
+    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.5));
+}
+
+/* Moon animation for dark mode */
+[data-theme="dark"] .toggle .icon {
+    filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.5));
 }

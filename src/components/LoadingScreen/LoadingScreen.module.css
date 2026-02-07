@@ -1,0 +1,360 @@
+/* ===============================================
+   ⏳ 3D LOADING SCREEN - Premium Animation
+   With Neon Glow Effects
+   =============================================== */
+
+.loadingScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-primary);
+    background-image: var(--gradient-mesh);
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.loadingScreen.fadeOut {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Background animated orbs */
+.backgroundOrbs {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.orb1,
+.orb2,
+.orb3 {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: orbFloat 12s ease-in-out infinite;
+}
+
+.orb1 {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    top: -100px;
+    left: -50px;
+    animation-delay: 0s;
+}
+
+.orb2 {
+    width: 250px;
+    height: 250px;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    bottom: -80px;
+    right: -50px;
+    animation-delay: 4s;
+}
+
+.orb3 {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: 8s;
+}
+
+@keyframes orbFloat {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    25% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+
+    50% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+
+    75% {
+        transform: translate(-30px, -20px) scale(1.05);
+    }
+}
+
+/* Main content container */
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+    /* Increased gap to push loading text lower */
+    z-index: 1;
+}
+
+/* 3D Food container */
+.foodContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+}
+
+/* Individual food item wrapper */
+.foodItem {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: float3DSmooth 3s ease-in-out infinite;
+    transform-style: preserve-3d;
+}
+
+.foodItem:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.foodItem:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.foodItem:nth-child(3) {
+    animation-delay: 0.8s;
+}
+
+/* Food images with neon glow */
+.foodImage {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    /* Remove any background */
+    background: transparent;
+    /* Neon color-changing glow */
+    filter: drop-shadow(0 0 12px var(--neon-color, #667eea));
+    animation: neonGlow 4s ease-in-out infinite;
+    transition: transform 0.4s ease;
+}
+
+.foodItem:nth-child(1) .foodImage {
+    animation: neonGlow1 4s ease-in-out infinite;
+}
+
+.foodItem:nth-child(2) .foodImage {
+    animation: neonGlow2 4s ease-in-out infinite;
+    animation-delay: 1.3s;
+}
+
+.foodItem:nth-child(3) .foodImage {
+    animation: neonGlow3 4s ease-in-out infinite;
+    animation-delay: 2.6s;
+}
+
+/* Neon glow animations - cycling through colors */
+@keyframes neonGlow1 {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px #ff00ff) drop-shadow(0 0 20px #ff00ff) drop-shadow(0 0 30px #ff00ff);
+    }
+
+    33% {
+        filter: drop-shadow(0 0 8px #00ffff) drop-shadow(0 0 20px #00ffff) drop-shadow(0 0 30px #00ffff);
+    }
+
+    66% {
+        filter: drop-shadow(0 0 8px #ffff00) drop-shadow(0 0 20px #ffff00) drop-shadow(0 0 30px #ffff00);
+    }
+}
+
+@keyframes neonGlow2 {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px #00ffff) drop-shadow(0 0 20px #00ffff) drop-shadow(0 0 30px #00ffff);
+    }
+
+    33% {
+        filter: drop-shadow(0 0 8px #ff6b6b) drop-shadow(0 0 20px #ff6b6b) drop-shadow(0 0 30px #ff6b6b);
+    }
+
+    66% {
+        filter: drop-shadow(0 0 8px #4ecdc4) drop-shadow(0 0 20px #4ecdc4) drop-shadow(0 0 30px #4ecdc4);
+    }
+}
+
+@keyframes neonGlow3 {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px #a855f7) drop-shadow(0 0 20px #a855f7) drop-shadow(0 0 30px #a855f7);
+    }
+
+    33% {
+        filter: drop-shadow(0 0 8px #ec4899) drop-shadow(0 0 20px #ec4899) drop-shadow(0 0 30px #ec4899);
+    }
+
+    66% {
+        filter: drop-shadow(0 0 8px #06b6d4) drop-shadow(0 0 20px #06b6d4) drop-shadow(0 0 30px #06b6d4);
+    }
+}
+
+/* Shadow under each item */
+.shadow {
+    width: 40px;
+    height: 10px;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, transparent 70%);
+    border-radius: 50%;
+    margin-top: 12px;
+    animation: shadowPulseSmooth 3s ease-in-out infinite;
+    transform: rotateX(60deg);
+}
+
+.foodItem:nth-child(1) .shadow {
+    animation-delay: 0s;
+}
+
+.foodItem:nth-child(2) .shadow {
+    animation-delay: 0.4s;
+}
+
+.foodItem:nth-child(3) .shadow {
+    animation-delay: 0.8s;
+}
+
+/* Smoother 3D Float animation */
+@keyframes float3DSmooth {
+
+    0%,
+    100% {
+        transform: translateY(0) rotateY(0deg) rotateX(0deg) scale(1);
+    }
+
+    25% {
+        transform: translateY(-12px) rotateY(8deg) rotateX(4deg) scale(1.02);
+    }
+
+    50% {
+        transform: translateY(-20px) rotateY(0deg) rotateX(-4deg) scale(1.05);
+    }
+
+    75% {
+        transform: translateY(-12px) rotateY(-8deg) rotateX(4deg) scale(1.02);
+    }
+}
+
+/* Smoother shadow pulse */
+@keyframes shadowPulseSmooth {
+
+    0%,
+    100% {
+        transform: scale(1) rotateX(60deg);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(0.6) rotateX(60deg);
+        opacity: 0.25;
+    }
+}
+
+/* Loading text - positioned lower */
+.loadingText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-top: 1rem;
+}
+
+.loadingText span {
+    display: inline-block;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: letterWave 2s ease-in-out infinite;
+}
+
+.loadingText span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.loadingText span:nth-child(2) {
+    animation-delay: 0.08s;
+}
+
+.loadingText span:nth-child(3) {
+    animation-delay: 0.16s;
+}
+
+.loadingText span:nth-child(4) {
+    animation-delay: 0.24s;
+}
+
+.loadingText span:nth-child(5) {
+    animation-delay: 0.32s;
+}
+
+.loadingText span:nth-child(6) {
+    animation-delay: 0.40s;
+}
+
+.loadingText span:nth-child(7) {
+    animation-delay: 0.48s;
+}
+
+.dots {
+    animation: dotsPulse 1.2s ease-in-out infinite !important;
+}
+
+/* Smoother letter wave */
+@keyframes letterWave {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+}
+
+@keyframes dotsPulse {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .shadow {
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+}
+
+[data-theme="dark"] .orb1 {
+    opacity: 0.35;
+}
+
+[data-theme="dark"] .orb2 {
+    opacity: 0.3;
+}
+
+[data-theme="dark"] .orb3 {
+    opacity: 0.3;
+}
