@@ -206,6 +206,56 @@
     z-index: 100;
 }
 
+/* Cart counter with +/- buttons */
+.cartCounter {
+    display: flex;
+    align-items: center;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    padding: 0.25rem;
+    gap: 0;
+}
+
+.counterBtn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-primary);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all var(--transition);
+    color: #fff;
+}
+
+.counterBtn:hover:not(:disabled) {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-colored);
+}
+
+.counterBtn:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.counterBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: var(--text-tertiary);
+}
+
+.countDisplay {
+    min-width: 36px;
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
 /* AR Button - takes remaining space */
 .arBtn {
     flex: 1;

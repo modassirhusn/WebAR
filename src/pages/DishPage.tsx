@@ -1,7 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { getFoodById } from '../data/foodData';
 import { useCart } from '../contexts/CartContext';
-import CartCounter from '../components/CartCounter';
 import styles from './DishPage.module.css';
 
 export default function DishPage() {
@@ -68,12 +67,29 @@ export default function DishPage() {
 
                 {/* Action buttons row */}
                 <div className={styles.actionRow}>
-                    {/* 3D Neumorphic Cart Counter */}
-                    <CartCounter
-                        quantity={quantity}
-                        onAdd={() => addItem(food)}
-                        onRemove={() => removeItem(food.id)}
-                    />
+                    {/* Simple +/- Cart Counter */}
+                    <div className={styles.cartCounter}>
+                        <button
+                            className={styles.counterBtn}
+                            onClick={() => removeItem(food.id)}
+                            disabled={quantity === 0}
+                            aria-label="Remove from cart"
+                        >
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                                <path d="M5 12h14" />
+                            </svg>
+                        </button>
+                        <span className={styles.countDisplay}>{quantity}</span>
+                        <button
+                            className={styles.counterBtn}
+                            onClick={() => addItem(food)}
+                            aria-label="Add to cart"
+                        >
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </button>
+                    </div>
 
                     {/* View in AR button */}
                     <button

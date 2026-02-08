@@ -15,6 +15,7 @@ import AboutPage from './pages/AboutPage';
 // Components
 import Navigation from './components/Navigation';
 import ThemeToggle from './components/ThemeToggle';
+import CartDrawer from './components/CartDrawer';
 import LoadingScreen, { PageTransition } from './components/LoadingScreen';
 
 export default function App() {
@@ -37,6 +38,7 @@ export default function App() {
 
             <ThemeToggle />
             <Navigation />
+            <CartDrawer />
 
             {/* PageTransition wraps Routes to show loading on page changes */}
             <PageTransition duration={600}>

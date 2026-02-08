@@ -1,22 +1,20 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useCart } from '../contexts/CartContext';
 import styles from './Navigation.module.css';
 
 const NAV_ITEMS = [
-    { path: '/', label: 'Home', icon: '🏠' },
-    { path: '/scan', label: 'Scan', icon: '📱' },
-    { path: '/menu', label: 'Menu', icon: '🍽️' },
-    { path: '/hotel', label: 'Hotel', icon: '🏨' },
-    { path: '/feedback', label: 'Contact', icon: '💬' },
-    { path: '/about', label: 'About', icon: 'ℹ️' },
+    { path: '/', label: 'Home', icon: '' },
+    { path: '/scan', label: 'Scan', icon: '' },
+    { path: '/menu', label: 'Menu', icon: '' },
+    { path: '/hotel', label: 'Hotel', icon: '' },
+    { path: '/feedback', label: 'Contact', icon: '' },
+    { path: '/about', label: 'About', icon: '' },
 ];
 
 export default function Navigation() {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-    const { totalItems } = useCart();
 
     const handleNavigate = (path: string) => {
         navigate(path);
@@ -41,13 +39,6 @@ export default function Navigation() {
                 <span />
             </button>
 
-            {/* Cart Badge */}
-            {totalItems > 0 && (
-                <div className={styles.cartBadge}>
-                    {totalItems}
-                </div>
-            )}
-
             {/* Overlay */}
             {isOpen && (
                 <div className={styles.overlay} onClick={() => setIsOpen(false)} />
@@ -56,7 +47,7 @@ export default function Navigation() {
             {/* Slide Menu */}
             <nav className={`${styles.menu} ${isOpen ? styles.open : ''}`}>
                 <div className={styles.header}>
-                    <h2>Menu</h2>
+                    <h2>Options</h2>
                     <button className={styles.close} onClick={() => setIsOpen(false)}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M18 6L6 18M6 6l12 12" />
