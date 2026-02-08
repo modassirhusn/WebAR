@@ -304,10 +304,10 @@ export const FOOD_DATA: FoodItem[] = [
 ];
 
 export const CATEGORIES = [
-    { id: 'north-indian', name: 'North Indian', icon: '🍛' },
-    { id: 'chinese', name: 'Chinese', icon: '🥢' },
-    { id: 'south-indian', name: 'South Indian', icon: '🥘' },
-    { id: 'desserts', name: 'Desserts', icon: '🍰' },
+    { id: 'north-indian', name: 'North Indian', icon: '' },
+    { id: 'chinese', name: 'Chinese', icon: '' },
+    { id: 'south-indian', name: 'South Indian', icon: '' },
+    { id: 'desserts', name: 'Desserts', icon: '' },
 ] as const;
 
 export function getFoodById(id: string): FoodItem | undefined {

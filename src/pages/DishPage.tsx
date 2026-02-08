@@ -4,7 +4,7 @@ import { useCart } from '../contexts/CartContext';
 import styles from './DishPage.module.css';
 
 export default function DishPage() {
-    const { id } = useParams<{ id: string }>();
+    const { hotelId, id } = useParams<{ hotelId: string; id: string }>();
     const navigate = useNavigate();
     const food = getFoodById(id || '');
     const { getItemQuantity, addItem, removeItem } = useCart();
@@ -21,7 +21,7 @@ export default function DishPage() {
 
     return (
         <div className={`page ${styles.dishPage}`}>
-            <button className={styles.backBtn} onClick={() => navigate('/menu')}>
+            <button className={styles.backBtn} onClick={() => navigate(`/menu/${hotelId}`)}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M19 12H5M12 19l-7-7 7-7" />
                 </svg>
@@ -94,7 +94,7 @@ export default function DishPage() {
                     {/* View in AR button */}
                     <button
                         className={`btn btn-primary ${styles.arBtn}`}
-                        onClick={() => navigate(`/ar/${food.id}`)}
+                        onClick={() => navigate(`/menu/${hotelId}/ar/${food.id}`)}
                     >
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />

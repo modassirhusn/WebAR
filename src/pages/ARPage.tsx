@@ -5,7 +5,7 @@ import { useCart } from '../contexts/CartContext';
 import styles from './ARPage.module.css';
 
 export default function ARPage() {
-    const { id } = useParams<{ id: string }>();
+    const { hotelId, id } = useParams<{ hotelId: string; id: string }>();
     const navigate = useNavigate();
     const { addItem } = useCart();
     const food = getFoodById(id || '');
@@ -54,7 +54,7 @@ export default function ARPage() {
 
     const handleBack = () => {
         stopCamera();
-        navigate(`/dish/${id}`);
+        navigate(`/menu/${hotelId}/dish/${id}`);
     };
 
     if (!food) {

@@ -47,9 +47,16 @@ export default function App() {
                     <Route path="/" element={<LandingPage />} />
                     {/* Scanner moved to /scan */}
                     <Route path="/scan" element={<ScannerPage />} />
-                    <Route path="/menu" element={<MenuPage />} />
-                    <Route path="/dish/:id" element={<DishPage />} />
-                    <Route path="/ar/:id" element={<ARPage />} />
+                    {/* Dynamic Hotel Routes */}
+                    <Route path="/menu/:hotelId" element={<MenuPage />} />
+                    <Route path="/menu/:hotelId/dish/:id" element={<DishPage />} />
+                    <Route path="/menu/:hotelId/ar/:id" element={<ARPage />} />
+
+                    {/* Default/Legacy Redirects */}
+                    <Route path="/menu" element={<Navigate to="/menu/shubham-bhais-hotel" replace />} />
+                    <Route path="/dish/:id" element={<Navigate to="/menu/shubham-bhais-hotel/dish/:id" replace />} />
+                    <Route path="/ar/:id" element={<Navigate to="/menu/shubham-bhais-hotel/ar/:id" replace />} />
+
                     <Route path="/hotel" element={<HotelPage />} />
                     <Route path="/feedback" element={<FeedbackPage />} />
                     <Route path="/about" element={<AboutPage />} />
