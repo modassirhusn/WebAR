@@ -1,9 +1,16 @@
+/* ===============================================
+   📸 AR PAGE - Fullscreen 3D Model View
+   Clean, minimal UI with large centered model
+   =============================================== */
+
 .arView {
     position: fixed;
     inset: 0;
     background: #000;
+    overflow: hidden;
 }
 
+/* Camera Feed - Fullscreen background */
 .cameraFeed {
     position: absolute;
     inset: 0;
@@ -12,22 +19,31 @@
     object-fit: cover;
 }
 
+/* 3D Model Container - Fullscreen, no boundaries */
 .modelContainer {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 75%;
-    height: 50%;
+    inset: 0;
     z-index: 10;
     pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Model Viewer - Large size, centered at roughly 35% of screen */
 .modelViewer {
     width: 100%;
     height: 100%;
+    --poster-color: transparent;
 }
 
+/* Ensure model-viewer fills the container */
+.modelContainer model-viewer {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Loading Overlay */
 .loading {
     position: absolute;
     inset: 0;
@@ -41,11 +57,13 @@
     z-index: 100;
 }
 
+/* Overlay - Only for header and order panel */
 .overlay {
     position: absolute;
     inset: 0;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     pointer-events: none;
     z-index: 20;
 }
@@ -54,23 +72,24 @@
     pointer-events: auto;
 }
 
+/* Header - Minimal */
 .header {
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 1rem;
     padding-top: calc(env(safe-area-inset-top) + 1rem);
-    background: linear-gradient(rgba(0, 0, 0, 0.6), transparent);
+    background: linear-gradient(rgba(0, 0, 0, 0.5), transparent);
 }
 
 .backBtn {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border: none;
     border-radius: var(--radius-full);
     background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     color: #fff;
     cursor: pointer;
     display: flex;
@@ -81,96 +100,24 @@
 
 .backBtn:hover {
     background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
 }
 
 .dishName {
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: 700;
     color: #fff;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
 }
 
-.specs {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.specItem {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-md);
-    padding: 0.75rem;
-    text-align: center;
-    min-width: 64px;
-}
-
-.specValue {
-    display: block;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #fff;
-}
-
-.specLabel {
-    font-size: 0.625rem;
-    color: rgba(255, 255, 255, 0.7);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.ingredients {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-md);
-    padding: 1rem;
-    max-width: 140px;
-}
-
-.ingredients h3 {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #fff;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.ingredients ul {
-    list-style: none;
-}
-
-.ingredients li {
-    font-size: 0.8125rem;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 0.25rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.ingredients li:last-child {
-    border-bottom: none;
-}
-
+/* Order Panel - Bottom */
 .orderPanel {
-    margin-top: auto;
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 1rem;
-    padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    padding: 1.25rem;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 1.25rem);
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
 }
 
 .quantityControl {
@@ -178,21 +125,21 @@
     align-items: center;
     gap: 0.75rem;
     background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-radius: var(--radius-full);
     padding: 0.5rem 1rem;
 }
 
 .quantityControl button {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border: none;
     border-radius: var(--radius-full);
-    background: transparent;
+    background: rgba(255, 255, 255, 0.2);
     color: #fff;
     font-size: 1.25rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -201,17 +148,21 @@
 }
 
 .quantityControl button:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.35);
+    transform: scale(1.1);
 }
 
 .quantityControl span {
     font-size: 1.125rem;
-    font-weight: 600;
+    font-weight: 700;
     color: #fff;
-    min-width: 24px;
+    min-width: 28px;
     text-align: center;
 }
 
 .orderBtn {
     flex: 1;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 700;
 }

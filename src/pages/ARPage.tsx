@@ -67,19 +67,20 @@ export default function ARPage() {
 
     return (
         <div className={styles.arView}>
-            {/* Camera Feed */}
+            {/* Camera Feed - Fullscreen */}
             <video ref={videoRef} className={styles.cameraFeed} autoPlay playsInline muted />
 
-            {/* 3D Model Overlay */}
+            {/* 3D Model Overlay - Fullscreen, centered at 45% of screen */}
             <div className={styles.modelContainer}>
                 <model-viewer
                     src={food.model}
                     camera-controls
                     shadow-intensity="1"
-                    exposure="1"
-                    camera-orbit="0deg 75deg 2m"
-                    min-camera-orbit="auto auto 0.5m"
-                    max-camera-orbit="auto auto 4m"
+                    exposure="1.2"
+                    camera-orbit="0deg 75deg 1.2m"
+                    min-camera-orbit="auto auto 0.3m"
+                    max-camera-orbit="auto auto 3m"
+                    field-of-view="45deg"
                     className={styles.modelViewer}
                 />
             </div>
@@ -92,7 +93,7 @@ export default function ARPage() {
                 </div>
             )}
 
-            {/* AR Overlay UI */}
+            {/* Minimal AR Overlay UI - Only header and order panel */}
             <div className={styles.overlay}>
                 {/* Header */}
                 <div className={styles.header}>
@@ -104,33 +105,7 @@ export default function ARPage() {
                     <h2 className={styles.dishName}>{food.name}</h2>
                 </div>
 
-                {/* Nutrition Specs */}
-                <div className={styles.specs}>
-                    <div className={styles.specItem}>
-                        <span className={styles.specValue}>{food.protein}</span>
-                        <span className={styles.specLabel}>Protein</span>
-                    </div>
-                    <div className={styles.specItem}>
-                        <span className={styles.specValue}>{food.carbs}</span>
-                        <span className={styles.specLabel}>Carbs</span>
-                    </div>
-                    <div className={styles.specItem}>
-                        <span className={styles.specValue}>{food.fiber}</span>
-                        <span className={styles.specLabel}>Fiber</span>
-                    </div>
-                </div>
-
-                {/* Ingredients */}
-                <div className={styles.ingredients}>
-                    <h3>Ingredients</h3>
-                    <ul>
-                        {food.ingredients.map((ing, i) => (
-                            <li key={i}>{ing}</li>
-                        ))}
-                    </ul>
-                </div>
-
-                {/* Order Panel */}
+                {/* Order Panel - Bottom */}
                 <div className={styles.orderPanel}>
                     <div className={styles.quantityControl}>
                         <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>−</button>
